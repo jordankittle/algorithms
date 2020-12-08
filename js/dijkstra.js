@@ -1,14 +1,14 @@
-//Dijkstra's algorithm implentation by Jordan Kittle
+//Dijkstra's algorithm implementation by Jordan Kittle
 
 function runDijkstra(grid, start, end){
 	let cycle = 0;
 	let queue = 0;
 	speed = parseInt(document.getElementById('speed').value);
-	//speed = 90;
 	console.log(speed);
 	const unvisited = [...grid];
 	const visited = [];
 	const startNum = parseInt(start.getAttribute('data-cellnum'));
+	const message = document.getElementById('message');
 	start.classList.remove('unvisited');
 	start.classList.add('visited');
 	start.setAttribute('data-distance', 0);
@@ -17,15 +17,15 @@ function runDijkstra(grid, start, end){
 
 	while(unvisited.length > 0 ){
 		if(++cycle >= grid.length * 4){
-			console.log('no path found');
+			message.textContent = 'No path found';
 			return;
 		}
 		for(let cell of visited){
 			if(cell === end){
-				console.log('end point found');
-				console.log('final queue: ' + queue);
+				
 				setTimeout(() => {
 					tracePath(end);
+					message.textContent = 'Path Completed';
 				}, queue);
 				return;
 			}
@@ -40,10 +40,8 @@ function runDijkstra(grid, start, end){
 		const previousCellNum = lastCell.getAttribute('data-routedFrom');
 		const previousCell = Array.from(grid).filter(cell => cell.getAttribute('data-cellnum') === previousCellNum );
 		if(previousCell[0] === start){
-			console.log('done tracing');
 			return;
 		}
-		console.log('tracing: ' + lastCell);
 		previousCell[0].classList.add('route');
 		setTimeout( () => tracePath(previousCell[0]), speed );
 
@@ -114,7 +112,6 @@ function runDijkstra(grid, start, end){
 					neighbor.classList.add('visited');
 				}, queue);
 				queue += speed;
-				//console.log(speed);
 				
 				neighbor.setAttribute('data-routedFrom', currentCell.getAttribute('data-cellnum'));
 				const neighborIndex = unvisited.indexOf(neighbor);
