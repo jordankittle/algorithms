@@ -2,6 +2,10 @@
 
 function runDijkstra(grid, start, end){
 	let cycle = 0;
+	let queue = 0;
+	speed = parseInt(document.getElementById('speed').value);
+	//speed = 90;
+	console.log(speed);
 	const unvisited = [...grid];
 	const visited = [];
 	const startNum = parseInt(start.getAttribute('data-cellnum'));
@@ -10,6 +14,7 @@ function runDijkstra(grid, start, end){
 	start.setAttribute('data-distance', 0);
 	getNeighbors(start);
 
+
 	while(unvisited.length > 0 ){
 		if(++cycle >= grid.length * 4){
 			console.log('no path found');
@@ -17,7 +22,11 @@ function runDijkstra(grid, start, end){
 		}
 		for(let cell of visited){
 			if(cell === end){
-				tracePath(end);
+				console.log('end point found');
+				console.log('final queue: ' + queue);
+				setTimeout(() => {
+					tracePath(end);
+				}, queue);
 				return;
 			}
 
@@ -34,8 +43,9 @@ function runDijkstra(grid, start, end){
 			console.log('done tracing');
 			return;
 		}
+		console.log('tracing: ' + lastCell);
 		previousCell[0].classList.add('route');
-		tracePath(previousCell[0]);
+		setTimeout( () => tracePath(previousCell[0]), 15 );
 
 	}
 
@@ -57,7 +67,7 @@ function runDijkstra(grid, start, end){
 				neighbors.unshift(potentialRight);
 			}
 			
-		} else if (x === 50) {
+		} else if (x === width) {
 			let potentialLeft = currentCell.previousElementSibling;
 			if(!potentialLeft.classList.contains('wall') && !potentialLeft.classList.contains('visited')){
 				neighbors.unshift(potentialLeft);
@@ -74,18 +84,18 @@ function runDijkstra(grid, start, end){
 		} 
 	
 		if(y === 1){
-			let potentialUp = grid[cellNum -50];
+			let potentialUp = grid[cellNum -width];
 			if(!potentialUp.classList.contains('wall') && !potentialUp.classList.contains('visited')){
 				neighbors.unshift(potentialUp);
 			}
-		} else if (y === 25) {
-			let potentialDown = grid[cellNum +50];
+		} else if (y === height) {
+			let potentialDown = grid[cellNum +width];
 			if(!potentialDown.classList.contains('wall') && !potentialDown.classList.contains('visited')){
 				neighbors.unshift(potentialDown);
 			}
 		} else {
-			let potentialUp = grid[cellNum -50];
-			let potentialDown = grid[cellNum +50];
+			let potentialUp = grid[cellNum -width];
+			let potentialDown = grid[cellNum +width];
 			if(!potentialUp.classList.contains('wall') && !potentialUp.classList.contains('visited')){
 				neighbors.unshift(potentialUp);
 			}
@@ -100,14 +110,23 @@ function runDijkstra(grid, start, end){
 			if(neighbor.getAttribute('data-distance') === 'infinity'){
 				neighbor.setAttribute('data-distance', +cellDistance + neighborWeight );
 				neighbor.classList.remove('unvisited');
-				neighbor.classList.add('visited');
+				setTimeout(() => {
+					neighbor.classList.add('visited');
+				}, queue);
+				queue += speed;
+				//console.log(speed);
+				
 				neighbor.setAttribute('data-routedFrom', currentCell.getAttribute('data-cellnum'));
 				const neighborIndex = unvisited.indexOf(neighbor);
 				visited.push(...unvisited.splice(neighborIndex,1));
 			} else if( tentativeDistance < neighborDistance ){
 				neighbor.setAttribute('data-distance', tentativeDistance );
 				neighbor.classList.remove('unvisited');
-				neighbor.classList.add('visited');
+				setTimeout(() => {
+					neighbor.classList.add('visited');
+				}, queue);
+				queue += speed;
+				console.log('got here');
 				neighbor.setAttribute('data-routedFrom', currentCell.getAttribute('data-cellnum'));
 				const neighborIndex = unvisited.indexOf(neighbor);
 				visited.push(...unvisited.splice(neighborIndex,1));

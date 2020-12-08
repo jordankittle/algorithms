@@ -19,14 +19,61 @@
 	text-align: right;
 }
 
-#run{
+button{
 	background: white;
 	color:black;
 	border-radius:30px;
+
 }
-#run:hover{
+button:hover{
 	background: dodgerblue;
 	color:white;
+}
+
+select, input{
+	border-radius:30px;
+}
+
+input{
+	width: 50px;
+}
+
+#speed {
+  -webkit-appearance: none;
+  width: 75px;
+  height: 10px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  direction: rtl
+}
+
+#speed:hover {
+  opacity: 1;
+}
+
+#speed::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius:30px;
+  background: darkblue;
+  cursor: pointer;
+}
+
+#speed::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+    border-radius:30px;
+  background: #darkblue;
+  cursor: pointer;
+}
+
+#run:hover{
+	
 }
 
 #menu a:link {
@@ -49,7 +96,8 @@
 	background: #EEEEEE;
 	margin: auto;
 	width: 90%;
-	height: 500px;
+	/*height: 675px;
+	*/
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -72,15 +120,17 @@
 .grid{
 	display: flex;
 	flex-wrap: wrap;
-	width: 1000px;
-	height: 500px;
+	width: 1200px;
+	height: 675px;
 }
 
 .cell{
 	border:1px solid black;
 	background: yellow;
-	height: 20px;
-	width: 20px;
+	/*height: 15px;
+	width: 15px;
+	*/
+	
 }
 
 
@@ -92,7 +142,7 @@
 .cell.visited {
 	background: khaki;
 	animation-name: visited;
-	animation-duration: .5s;
+	animation-duration: .1s;
 }
 
 
@@ -112,7 +162,7 @@
 .cell.route{
 	background: white;
 	animation-name: route;
-	animation-duration: .5s;
+	animation-duration: .1s;
 }
 
 

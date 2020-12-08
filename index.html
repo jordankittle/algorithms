@@ -23,6 +23,15 @@
           </div>
 
           <div id="menu">
+            <label for="columns">Columns</label>
+            <input type="text" name="width" id="widthInput">
+            <label for="rows">Rows</label>
+            <input type="text" name="height" id="heightInput">
+            <label for="cellSize">px</label>
+            <input type="text" name="cellSize" id="cellSize">
+            <button type="button" onclick="createGrid()">Draw Grid</button>
+            <label for="speed">Speed</label>
+            <input type="range" min="0" max="15" value="0" class="slider" id="speed">
             <label for="algorithm">Algorithm:</label>
             <select id="algorithm" name="algorithm">
               <option value="Dijkstra">Dijkstra</option>

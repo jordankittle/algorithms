@@ -1,20 +1,37 @@
 //main.js - Jordan Kittle
+const mainWrapper = document.getElementById('main-wrapper');
 const main = document.getElementById('main');
 let ctrlDown = false;
 let shiftDown = false;
 let start = null;
 let end = null;
+var height = 40;
+var width = 80;
+var cellSize = 15;
+document.getElementById('widthInput').value = width;
+document.getElementById('heightInput').value = height;
+document.getElementById('cellSize').value = cellSize;
+
 
 
 //Create Grid
 function createGrid(){
+	main.innerHTML = '';
+	width = +document.getElementById('widthInput').value;
+	height = +document.getElementById('heightInput').value;
+	cellSize = +document.getElementById('cellSize').value;
+	mainWrapper.style.height = `${height*cellSize}px`;
 	const table = document.createElement('div');
 	table.setAttribute('id', 'grid');
 	table.className = 'grid';
 	main.append(table);
+	table.style.width = `${width * cellSize}px`;
+	table.style.height = `${height * cellSize}px`;
 
-	for(let i=0; i < 1250; i++){
+	for(let i=0; i < width * height; i++){
 		const cell = document.createElement('div');
+		cell.style.width = `${cellSize}px`;
+		cell.style.height = `${cellSize}px`;
 		cell.className = "cell";
 		cell.classList.add('unvisited');
 		cell.setAttribute('data-cellNum', i);
@@ -26,8 +43,8 @@ function createGrid(){
 	}
 	const cells = table.querySelectorAll('.cell');
 	let counter = 0;
-	for(let y=25; y > 0; y--){
-		for(let x = 1; x <= 50; x++){
+	for(let y=height; y > 0; y--){
+		for(let x = 1; x <= width; x++){
 			cells[counter++].setAttribute('data-id', `${x},${y}`);
 		}
 	}
