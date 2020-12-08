@@ -59,6 +59,16 @@
 	background: white;
 }
 
+#footer-wrapper{
+	background: dodgerblue;
+}
+
+#footer{
+	margin:auto;
+	width: 90%;
+	text-align: center;
+}
+
 .grid{
 	display: flex;
 	flex-wrap: wrap;
@@ -74,14 +84,17 @@
 }
 
 
+@keyframes visited {
+	from {background-color: yellow;}
+  	to {background-color: khaki;}
+}
 
 .cell.visited {
-	background: grey;
+	background: khaki;
+	animation-name: visited;
+	animation-duration: .5s;
 }
 
-.cell.current{
-	background: red;
-}
 
 .cell.start {
 	background: dodgerblue;
@@ -91,9 +104,18 @@
 	background: red;
 }
 
+@keyframes route {
+	from {background-color: grey;}
+  	to {background-color: white;}
+}
+
 .cell.route{
 	background: white;
+	animation-name: route;
+	animation-duration: .5s;
 }
+
+
 
 .cell.wall{
 	background: black;
@@ -102,3 +124,5 @@
 .clearfix {
 	overflow: auto;
 }
+
+

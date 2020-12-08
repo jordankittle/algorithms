@@ -12,7 +12,6 @@ function runDijkstra(grid, start, end){
 	while(unvisited.length > 0){
 		for(let cell of visited){
 			if(cell === end){
-				console.log('done');
 				tracePath(end);
 				return;
 			}
@@ -21,13 +20,13 @@ function runDijkstra(grid, start, end){
 	}
 
 	function tracePath(lastCell){
-		if(lastCell === start){
+		
+		const previousCellNum = lastCell.getAttribute('data-routedFrom');
+		const previousCell = Array.from(grid).filter(cell => cell.getAttribute('data-cellnum') === previousCellNum );
+		if(previousCell[0] === start){
 			console.log('done tracing');
 			return;
 		}
-		const previousCellNum = lastCell.getAttribute('data-routedFrom');
-		const previousCell = Array.from(grid).filter(cell => cell.getAttribute('data-cellnum') === previousCellNum );
-		console.log(previousCell[0]);
 		previousCell[0].classList.add('route');
 		tracePath(previousCell[0]);
 
@@ -35,12 +34,9 @@ function runDijkstra(grid, start, end){
 
 
 	function getNeighbors(currentCell){
+		//currentCell.classList.add('current');
 		if(!currentCell.getAttribute('data-id')){
 			console.log(currentCell);
-		}
-		if(currentCell === end){
-			console.log('Found the end! Now program to trace the route!!! Fuck yeah!!!');
-			return;
 		}
 		const coords = currentCell.getAttribute('data-id').split(',');
 		const cellNum = parseInt(currentCell.getAttribute('data-cellnum') );
@@ -123,6 +119,7 @@ function runDijkstra(grid, start, end){
 			const neighborIndex = unvisited.indexOf(neighbor);
 			visited.push(...unvisited.splice(neighborIndex,1));
 		}
+		//currentCell.classList.remove('current');
 
 		return neighbors;
 		
