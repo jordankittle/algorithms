@@ -1,4 +1,4 @@
-//main.js
+//main.js - Jordan Kittle
 const main = document.getElementById('main');
 let ctrlDown = false;
 let shiftDown = false;

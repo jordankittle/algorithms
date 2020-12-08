@@ -1,4 +1,4 @@
-//Dijkstra's algorithm
+//Dijkstra's algorithm implentation by Jordan Kittle
 
 function runDijkstra(grid, start, end){
 	const unvisited = [...grid];
