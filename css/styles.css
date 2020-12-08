@@ -1,0 +1,104 @@
+#header-wrapper{
+	background: dodgerblue;
+}
+
+#header{
+	margin:auto;
+	width: 90%;
+}
+#title{
+	float: left;
+}
+
+#nav{
+	float: right;
+}
+
+#subtitle {
+	color:white;
+	text-align: right;
+}
+
+#run{
+	background: white;
+	color:black;
+	border-radius:30px;
+}
+#run:hover{
+	background: dodgerblue;
+	color:white;
+}
+
+#menu a:link {
+	color: white;
+	text-decoration: none;
+}
+#menu a:visited{
+	color: white;
+}
+#menu a:hover{
+	color: yellow;
+}
+#menu a:active{
+	color: white;
+}
+
+
+
+#main-wrapper{
+	background: #EEEEEE;
+	margin: auto;
+	width: 90%;
+	height: 500px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#main{
+	background: white;
+}
+
+.grid{
+	display: flex;
+	flex-wrap: wrap;
+	width: 1000px;
+	height: 500px;
+}
+
+.cell{
+	border:1px solid black;
+	background: yellow;
+	height: 20px;
+	width: 20px;
+}
+
+
+
+.cell.visited {
+	background: grey;
+}
+
+.cell.current{
+	background: red;
+}
+
+.cell.start {
+	background: dodgerblue;
+}
+
+.cell.end{
+	background: red;
+}
+
+.cell.route{
+	background: white;
+}
+
+.cell.wall{
+	background: black;
+}
+
+.clearfix {
+	overflow: auto;
+}
