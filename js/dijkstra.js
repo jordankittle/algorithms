@@ -1,6 +1,7 @@
 //Dijkstra's algorithm implentation by Jordan Kittle
 
 function runDijkstra(grid, start, end){
+	let cycle = 0;
 	const unvisited = [...grid];
 	const visited = [];
 	const startNum = parseInt(start.getAttribute('data-cellnum'));
@@ -9,13 +10,19 @@ function runDijkstra(grid, start, end){
 	start.setAttribute('data-distance', 0);
 	getNeighbors(start);
 
-	while(unvisited.length > 0){
+	while(unvisited.length > 0 ){
+		if(++cycle >= grid.length * 4){
+			console.log('no path found');
+			return;
+		}
 		for(let cell of visited){
 			if(cell === end){
 				tracePath(end);
 				return;
 			}
+
 			getNeighbors(cell);
+			
 		}
 	}
 
@@ -90,14 +97,22 @@ function runDijkstra(grid, start, end){
 			const neighborDistance = +neighbor.getAttribute('data-distance');
 			const neighborWeight = parseInt(neighbor.getAttribute('data-weight'));
 			const tentativeDistance = +cellDistance + neighborWeight;
-			neighbor.classList.remove('unvisited');
-			neighbor.classList.add('visited');
 			if(neighbor.getAttribute('data-distance') === 'infinity'){
 				neighbor.setAttribute('data-distance', +cellDistance + neighborWeight );
+				neighbor.classList.remove('unvisited');
+				neighbor.classList.add('visited');
+				neighbor.setAttribute('data-routedFrom', currentCell.getAttribute('data-cellnum'));
+				const neighborIndex = unvisited.indexOf(neighbor);
+				visited.push(...unvisited.splice(neighborIndex,1));
 			} else if( tentativeDistance < neighborDistance ){
 				neighbor.setAttribute('data-distance', tentativeDistance );
+				neighbor.classList.remove('unvisited');
+				neighbor.classList.add('visited');
+				neighbor.setAttribute('data-routedFrom', currentCell.getAttribute('data-cellnum'));
+				const neighborIndex = unvisited.indexOf(neighbor);
+				visited.push(...unvisited.splice(neighborIndex,1));
 			}
-			neighbor.setAttribute('data-routedFrom', currentCell.getAttribute('data-cellnum'));
+			
 
 		}
 
@@ -115,12 +130,11 @@ function runDijkstra(grid, start, end){
 		// 	alert('No more cells to check.');
 		// 	return;
 		// }
-		for(let neighbor of neighbors){
+		/*for(let neighbor of neighbors){
 			const neighborIndex = unvisited.indexOf(neighbor);
 			visited.push(...unvisited.splice(neighborIndex,1));
-		}
+		}*/
 		//currentCell.classList.remove('current');
-
 		return neighbors;
 		
 	}
