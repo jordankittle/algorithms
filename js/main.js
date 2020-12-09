@@ -64,12 +64,31 @@ function createGrid(){
 	});
 }
 
+function getCells(){
+	return document.querySelectorAll('.cell');
+}
+
+
 function addRandomNodes(){
-	
+	const cells = getCells();
+	const randomCell = () => cells[Math.floor(Math.random() * cells.length)];
+	for(cell of cells){
+		cell.classList.remove('end');
+		cell.classList.remove('start');
+	}
+	start = randomCell();
+	end = randomCell();
+	while(end === start){
+		end = randomCell();
+	}
+	console.log(start === end?true:false);
+	start.classList.add('start');
+	end.classList.add('end');
+
 }
 
 function handleCellClick(e){
-	const cells = document.querySelectorAll('.cell');
+	const cells = getCells();
 	if(ctrlDown === true && !e.target.classList.contains('wall') && !e.target.classList.contains('start')){
 		for(cell of cells){
 		cell.classList.remove('end');
@@ -112,7 +131,7 @@ document.addEventListener('keyup', e => {
 function run(){
 	if(start !== null && end != null){
 		const algorithm = document.getElementById('algorithm').value;
-		const grid = document.querySelectorAll('.cell');
+		const grid = getCells();
 		if(algorithm === "Dijkstra"){runDijkstra(grid, start, end)};
 	}
 }
