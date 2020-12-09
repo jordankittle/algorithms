@@ -54,7 +54,7 @@ function createGrid(){
 		if(e.which === 2){
 			for(cell of cells){
 				cell.className = 'cell';
-				cell.classList.add('univsited');
+				cell.classList.add('unvisited');
 				cell.setAttribute('data-distance', 'infinity');
 				cell.textContent = '';
 			}
