@@ -3,6 +3,7 @@
 function runDijkstra(grid, start, end){
 	let cycle = 0;
 	let queue = 0;
+	let noAvailableNeighbors = false;
 	let diagonalAllowed = document.getElementById('diagonal').checked?true:false;
 	speed = parseInt(document.getElementById('speed').value);
 	const unvisited = [...grid];
@@ -16,8 +17,9 @@ function runDijkstra(grid, start, end){
 
 
 	while(unvisited.length > 0 ){
-		if(++cycle >= grid.length * 4){
-			message.textContent = 'No path found';
+
+		if(noAvailableNeighbors){
+			console.log('No path found');
 			return;
 		}
 		for(let i = 0; i < visited.length; i++){
@@ -232,26 +234,9 @@ function runDijkstra(grid, start, end){
 			
 
 		}
-
-		// const closestNeighbor = neighbors.reduce((acc, neighbor) => {
-		// 	const neighborDistance = neighbor.getAttribute('data-distance');
-		// 	if(neighborDistance < acc) {
-		// 		return neighbor;
-		// 	} else {
-		// 		return acc;
-		// 	}
-		// }, {});
-		
-		// console.log(closestNeighbor);
-		// if (closestNeighbor === {}){
-		// 	alert('No more cells to check.');
-		// 	return;
-		// }
-		/*for(let neighbor of neighbors){
-			const neighborIndex = unvisited.indexOf(neighbor);
-			visited.push(...unvisited.splice(neighborIndex,1));
-		}*/
-		
+		if(neighbors.length === 0){
+			noAvailableNeighbors = true;
+		}
 		return neighbors;
 		
 	}
