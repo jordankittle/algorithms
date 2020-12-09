@@ -25,7 +25,7 @@ function runDijkstra(grid, start, end){
 				
 				setTimeout(() => {
 					tracePath(end);
-					console.log('done: ' + visited.length + ' and ' + grid.length);
+					console.log('Route Success')
 				}, queue);
 				return;
 			}
@@ -36,7 +36,8 @@ function runDijkstra(grid, start, end){
 	}
 
 	function tracePath(lastCell){
-		lastCell.textContent = lastCell.getAttribute('data-distance');
+		const lastDistance = +lastCell.getAttribute('data-distance');
+		lastCell.textContent = lastDistance;
 		let routeLength = 0;
 		const previousCellNum = lastCell.getAttribute('data-routedFrom');
 		const previousCell = Array.from(grid).filter(cell => cell.getAttribute('data-cellnum') === previousCellNum );
