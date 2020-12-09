@@ -43,6 +43,10 @@ input[type=button] {
 	width: 50px;
 }
 
+input[type=text] {
+	width:50px;
+}
+
 #speed {
   -webkit-appearance: none;
   width: 75px;
