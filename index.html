@@ -16,14 +16,12 @@
       <div id="header" class="clearfix">
         <div id="title">
           <h1>Algorithms</h1>
+          <h2 id="message"></h2>
         </div>
         <div id="nav">
-          <div id="subtitle">
-            By Jordan Kittle
-          </div>
 
           <div id="menu">
-            <h2 id="message"></h2>
+            
             <label for="columns">Columns</label>
             <input type="text" name="width" id="widthInput">
             <label for="rows">Rows</label>
@@ -31,7 +29,7 @@
             <label for="cellSize">px</label>
             <input type="text" name="cellSize" id="cellSize">
             <button type="button" onclick="createGrid()">Draw Grid</button>
-            <button type="button" onclick="addRandomNodes()">Random Nodes</button>
+            <button type="button" onclick="addRandomNodes()">Random Nodes</button><br>
             <label for="diagonal">Diagonal Travel</label>
             <input type="checkbox" id="diagonal" name="diagonal" checked>
             <label for="speed">Speed</label>

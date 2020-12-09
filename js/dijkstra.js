@@ -10,6 +10,7 @@ function runDijkstra(grid, start, end){
 	const visited = [];
 	const startNum = parseInt(start.getAttribute('data-cellnum'));
 	const message = document.getElementById('message');
+	message.textContent = '';
 	start.classList.remove('unvisited');
 	start.classList.add('visited');
 	start.setAttribute('data-distance', 0);
@@ -19,7 +20,9 @@ function runDijkstra(grid, start, end){
 	while(unvisited.length > 0 ){
 
 		if(noAvailableNeighbors){
-			console.log('No path found');
+			setTimeout(() => {
+					message.textContent = "No Route Found";
+				}, queue);
 			return;
 		}
 		for(let i = 0; i < visited.length; i++){
@@ -27,7 +30,7 @@ function runDijkstra(grid, start, end){
 				
 				setTimeout(() => {
 					tracePath(end);
-					console.log('Route Success')
+					message.textContent = "Route Found";
 				}, queue);
 				return;
 			}
@@ -38,15 +41,19 @@ function runDijkstra(grid, start, end){
 	}
 
 	function tracePath(lastCell){
+		console.log(lastCell);
 		const lastDistance = +lastCell.getAttribute('data-distance');
 		lastCell.textContent = lastDistance;
 		let routeLength = 0;
 		const previousCellNum = lastCell.getAttribute('data-routedFrom');
 		const previousCell = Array.from(grid).filter(cell => cell.getAttribute('data-cellnum') === previousCellNum );
+		console.log(previousCell.length);
 		if(previousCell[0] === start){
 			return;
 		}
-		previousCell[0].classList.add('route');
+		if(previousCell.length !== 0){
+			previousCell[0].classList.add('route');
+		}
 		//setTimeout( () => tracePath(previousCell[0]), speed);
 		tracePath(previousCell[0]);
 

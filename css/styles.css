@@ -5,13 +5,24 @@
 #header{
 	margin:auto;
 	width: 90%;
+
 }
 #title{
 	float: left;
+
+}
+
+#title h1, #title h2 {
+	display: inline-block;
+}
+
+#title h2 {
+	margin-left:10px;
 }
 
 #nav{
 	float: right;
+	text-align: right;
 }
 
 #message {
@@ -19,10 +30,6 @@
 	color: white;
 }
 
-#subtitle {
-	color:white;
-	text-align: right;
-}
 
 button{
 	background: white;
