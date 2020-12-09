@@ -44,7 +44,8 @@ function runDijkstra(grid, start, end){
 			return;
 		}
 		previousCell[0].classList.add('route');
-		setTimeout( () => tracePath(previousCell[0]), speed);
+		//setTimeout( () => tracePath(previousCell[0]), speed);
+		tracePath(previousCell[0]);
 
 	}
 
