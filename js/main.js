@@ -64,6 +64,10 @@ function createGrid(){
 	});
 }
 
+function addRandomNodes(){
+	
+}
+
 function handleCellClick(e){
 	const cells = document.querySelectorAll('.cell');
 	if(ctrlDown === true && !e.target.classList.contains('wall') && !e.target.classList.contains('start')){

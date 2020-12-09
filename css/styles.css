@@ -131,7 +131,10 @@ input{
 
 .cell{
 	border:1px solid black;
-	background: yellow;
+	background: dodgerblue;
+	font-size: 7px;
+	text-align: center;
+
 	/*height: 15px;
 	width: 15px;
 	*/
@@ -141,18 +144,18 @@ input{
 
 @keyframes visited {
 	from {background-color: yellow;}
-  	to {background-color: khaki;}
+  	to {background-color: royalblue;}
 }
 
 .cell.visited {
-	background: khaki;
+	background: royalblue;
 	animation-name: visited;
 	animation-duration: .3s;
 }
 
 
 .cell.start {
-	background: dodgerblue;
+	background: yellow;
 }
 
 .cell.end{
@@ -160,7 +163,7 @@ input{
 }
 
 @keyframes route {
-	from {background-color: grey;}
+	from {background-color: dodgerblue;}
   	to {background-color: white;}
 }
 
@@ -169,6 +172,18 @@ input{
 	animation-name: route;
 	animation-duration: .3s;
 }
+
+@keyframes current {
+	from {background-color: yellow;}
+  	to {background-color: red;}
+}
+
+.cell.current{
+	background: red;
+	animation-name: current;
+	animation-duration: .3s;
+}
+
 
 
 

@@ -36,20 +36,21 @@ function runDijkstra(grid, start, end){
 	}
 
 	function tracePath(lastCell){
-		
+		lastCell.textContent = lastCell.getAttribute('data-distance');
+		let routeLength = 0;
 		const previousCellNum = lastCell.getAttribute('data-routedFrom');
 		const previousCell = Array.from(grid).filter(cell => cell.getAttribute('data-cellnum') === previousCellNum );
 		if(previousCell[0] === start){
 			return;
 		}
 		previousCell[0].classList.add('route');
+		//previousCell[0].textContent = previousCell[0].getAttribute('data-distance');
 		setTimeout( () => tracePath(previousCell[0]), speed );
 
 	}
 
 
 	function getNeighbors(currentCell){
-		//currentCell.classList.add('current');
 		if(!currentCell.getAttribute('data-id')){
 			console.log(currentCell);
 		}
@@ -150,7 +151,7 @@ function runDijkstra(grid, start, end){
 			const neighborIndex = unvisited.indexOf(neighbor);
 			visited.push(...unvisited.splice(neighborIndex,1));
 		}*/
-		//currentCell.classList.remove('current');
+		
 		return neighbors;
 		
 	}
