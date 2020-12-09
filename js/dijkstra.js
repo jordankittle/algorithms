@@ -3,8 +3,8 @@
 function runDijkstra(grid, start, end){
 	let cycle = 0;
 	let queue = 0;
+	let diagonalAllowed = document.getElementById('diagonal').checked?true:false;
 	speed = parseInt(document.getElementById('speed').value);
-	console.log(speed);
 	const unvisited = [...grid];
 	const visited = [];
 	const startNum = parseInt(start.getAttribute('data-cellnum'));
@@ -20,17 +20,17 @@ function runDijkstra(grid, start, end){
 			message.textContent = 'No path found';
 			return;
 		}
-		for(let cell of visited){
-			if(cell === end){
+		for(let i = 0; i < visited.length; i++){
+			if(visited[i] === end){
 				
 				setTimeout(() => {
 					tracePath(end);
-					message.textContent = 'Path Completed';
+					console.log('done: ' + visited.length + ' and ' + grid.length);
 				}, queue);
 				return;
 			}
 
-			getNeighbors(cell);
+			getNeighbors(visited[i]);
 			
 		}
 	}
@@ -60,75 +60,174 @@ function runDijkstra(grid, start, end){
 		const x = parseInt(coords[0]);
 		const y = parseInt(coords[1]);
 		const neighbors = [];
-		if(x === 1){
-			let potentialRight = currentCell.nextElementSibling;
-			if (!potentialRight.classList.contains('wall') && !potentialRight.classList.contains('visited')){
-				neighbors.unshift(potentialRight);
-			}
-			
-		} else if (x === width) {
+		
+		const left = () => {
 			let potentialLeft = currentCell.previousElementSibling;
-			if(!potentialLeft.classList.contains('wall') && !potentialLeft.classList.contains('visited')){
-				neighbors.unshift(potentialLeft);
-			}
-		} else {
-			let potentialRight = currentCell.nextElementSibling;
-			let potentialLeft = currentCell.previousElementSibling;
-			if (!potentialRight.classList.contains('wall') && !potentialRight.classList.contains('visited')){
-				neighbors.unshift(potentialRight);
-			}
-			if(!potentialLeft.classList.contains('wall') && !potentialLeft.classList.contains('visited')){
-				neighbors.unshift(potentialLeft);
-			}
-		} 
-	
-		if(y === 1){
-			let potentialUp = grid[cellNum -width];
-			if(!potentialUp.classList.contains('wall') && !potentialUp.classList.contains('visited')){
-				neighbors.unshift(potentialUp);
-			}
-		} else if (y === height) {
-			let potentialDown = grid[cellNum +width];
-			if(!potentialDown.classList.contains('wall') && !potentialDown.classList.contains('visited')){
-				neighbors.unshift(potentialDown);
-			}
-		} else {
-			let potentialUp = grid[cellNum -width];
-			let potentialDown = grid[cellNum +width];
-			if(!potentialUp.classList.contains('wall') && !potentialUp.classList.contains('visited')){
-				neighbors.unshift(potentialUp);
-			}
-			if(!potentialDown.classList.contains('wall') && !potentialDown.classList.contains('visited')){
-				neighbors.unshift(potentialDown);
+			if(!potentialLeft.classList.contains('wall') && potentialLeft.classList.contains('unvisited')){
+				neighbors.push(potentialLeft);
 			}
 		}
+
+		const right = () => {
+			let potentialRight = currentCell.nextElementSibling;
+			if (!potentialRight.classList.contains('wall') && potentialRight.classList.contains('unvisited')){
+				neighbors.push(potentialRight);
+			}
+		}
+
+		const up = () => {
+			let potentialUp = grid[cellNum -width];
+			if(!potentialUp.classList.contains('wall') && potentialUp.classList.contains('unvisited')){
+				neighbors.push(potentialUp);
+			}
+		}
+		const down = () => {
+			let potentialDown = grid[cellNum +width];
+			if(!potentialDown.classList.contains('wall') && potentialDown.classList.contains('unvisited')){
+				neighbors.push(potentialDown);
+			}
+		}
+
+		const upLeft = () => {
+			let potentialUpLeft = grid[cellNum - (width+1)];
+			if(!potentialUpLeft.classList.contains('wall') && potentialUpLeft.classList.contains('unvisited')){
+				const currentWeight = +potentialUpLeft.getAttribute('data-weight');
+				potentialUpLeft.setAttribute('data-weight', Math.sqrt(currentWeight*2));
+				neighbors.push(potentialUpLeft);
+			}
+		}
+
+		const upRight = () => {
+			let potentialUpRight = grid[cellNum - (width-1)];
+			if(!potentialUpRight.classList.contains('wall') && potentialUpRight.classList.contains('unvisited')){
+				const currentWeight = +potentialUpRight.getAttribute('data-weight');
+				potentialUpRight.setAttribute('data-weight', Math.sqrt(currentWeight*2));
+				neighbors.push(potentialUpRight);
+			}
+		}
+
+		const downLeft = () => {
+			let potentialDownLeft = grid[cellNum + (width-1)];
+			if(!potentialDownLeft.classList.contains('wall') && potentialDownLeft.classList.contains('unvisited')){
+				const currentWeight = +potentialDownLeft.getAttribute('data-weight');
+				potentialDownLeft.setAttribute('data-weight', Math.sqrt(currentWeight*2));
+				neighbors.push(potentialDownLeft);
+			}
+		}
+
+		const downRight = () => {
+			let potentialDownRight = grid[cellNum + (width+1)];
+			if(!potentialDownRight.classList.contains('wall') && potentialDownRight.classList.contains('unvisited')){
+				const currentWeight = +potentialDownRight.getAttribute('data-weight');
+				potentialDownRight.setAttribute('data-weight', Math.sqrt(currentWeight*2));
+				neighbors.push(potentialDownRight);
+			}
+		}
+
+		//up down left right
+		if(x === 1){
+			//right
+			right();
+			
+		} else if (x === width) {
+			left();
+		} else {
+			left();
+			right();
+		} 
+		if(y === 1){
+			up();
+		} else if (y === height) {
+			down();
+		} else {
+			up();
+			down();
+		}
+		
+		if(diagonalAllowed){
+			if(x === 1){
+				if(y === 1){
+					//up and to the right
+					upRight();
+					
+				} else if(y === height){
+					//down and to the right
+					downRight();
+					
+				} else {
+					//up right and down right
+					upRight();
+					downRight();
+				}
+			} else if(x === width){
+				if(y === 1){
+					//up and to the left
+					upLeft();
+				} else if(y === height){
+					//down and to the left
+					downLeft();
+				} else {
+					//up and down left
+					upLeft();
+					downLeft();
+				}
+			} else if(y === 1){
+				//up left and right
+				upLeft();
+				upRight();
+			} else if(y === height){
+				//down left and right
+				downLeft();
+				downRight();
+			} else {
+				//all four corners
+				upLeft();
+				upRight();
+				downLeft();
+				downRight();
+			}
+		}
+
+
+		//
 		for(let neighbor of neighbors){
-			const neighborDistance = +neighbor.getAttribute('data-distance');
-			const neighborWeight = parseInt(neighbor.getAttribute('data-weight'));
+			const neighborDistance = neighbor.getAttribute('data-distance');
+			const neighborWeight = +neighbor.getAttribute('data-weight');
 			const tentativeDistance = +cellDistance + neighborWeight;
-			if(neighbor.getAttribute('data-distance') === 'infinity'){
+			//console.log('existing: ' + cellDistance + ',  neighborDistance: ' + neighborDistance + ', neighborWeight: ' + neighborWeight + ', tentativeDistance: ' + tentativeDistance);
+
+			const routeNeighbor = () => {
+				neighbor.setAttribute('data-routedFrom', currentCell.getAttribute('data-cellnum'));
+				const neighborIndex = unvisited.indexOf(neighbor);
+				visited.push(...unvisited.splice(neighborIndex,1));
+			}
+
+			if(neighborDistance === 'infinity'){
 				neighbor.setAttribute('data-distance', +cellDistance + neighborWeight );
 				neighbor.classList.remove('unvisited');
 				setTimeout(() => {
 					neighbor.classList.add('visited');
 				}, queue);
 				queue += speed;
+				routeNeighbor();
 				
-				neighbor.setAttribute('data-routedFrom', currentCell.getAttribute('data-cellnum'));
-				const neighborIndex = unvisited.indexOf(neighbor);
-				visited.push(...unvisited.splice(neighborIndex,1));
+				
 			} else if( tentativeDistance < neighborDistance ){
+				console.log('got to second case');
+				console.log('neighborDistance existing: ' + neighborDistance + ' vs tentative distance: ' + tentativeDistance);
 				neighbor.setAttribute('data-distance', tentativeDistance );
 				neighbor.classList.remove('unvisited');
 				setTimeout(() => {
 					neighbor.classList.add('visited');
 				}, queue);
 				queue += speed;
-				console.log('got here');
-				neighbor.setAttribute('data-routedFrom', currentCell.getAttribute('data-cellnum'));
-				const neighborIndex = unvisited.indexOf(neighbor);
-				visited.push(...unvisited.splice(neighborIndex,1));
+				routeNeighbor();
+			} else {
+				neighbor.classList.remove('unvisited');
+				//console.log('got to third case');
+				//console.log('neighborDistance existing: ' + neighborDistance + ' vs tentative distance: ' + tentativeDistance);
 			}
+
 			
 
 		}

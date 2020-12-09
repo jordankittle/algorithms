@@ -56,6 +56,7 @@ function createGrid(){
 				cell.className = 'cell';
 				cell.classList.add('univsited');
 				cell.setAttribute('data-distance', 'infinity');
+				cell.textContent = '';
 			}
 			start = null;
 			end = null;
@@ -109,7 +110,13 @@ function handleMouseOver(e){
 		e.target.classList.remove('wall');
 	}
 	else if(shiftDown === true  && !e.target.classList.contains('start') && !e.target.classList.contains('end')){
-		e.target.classList.add('wall');
+		if(document.getElementById('diagonal').checked && e.target.getAttribute('data-id').split(',')[0] % width !== 0){
+			e.target.classList.add('wall');
+			e.target.nextElementSibling.classList.add('wall');
+
+		} else {
+			e.target.classList.add('wall');
+		}
 	} 
 }
 

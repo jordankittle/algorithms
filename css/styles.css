@@ -39,7 +39,7 @@ select, input{
 	border-radius:30px;
 }
 
-input{
+input[type=button] {
 	width: 50px;
 }
 
@@ -94,7 +94,6 @@ input{
 #menu a:active{
 	color: white;
 }
-
 
 
 #main-wrapper{
