@@ -41,13 +41,12 @@ function runDijkstra(grid, start, end){
 	}
 
 	function tracePath(lastCell){
-		console.log(lastCell);
-		const lastDistance = +lastCell.getAttribute('data-distance');
-		lastCell.textContent = lastDistance;
+
+		const lastDistance = +lastCell.getAttribute('data-distance');	
+		lastCell.textContent = lastDistance.toFixed(1);
 		let routeLength = 0;
 		const previousCellNum = lastCell.getAttribute('data-routedFrom');
 		const previousCell = Array.from(grid).filter(cell => cell.getAttribute('data-cellnum') === previousCellNum );
-		console.log(previousCell.length);
 		if(previousCell[0] === start){
 			return;
 		}

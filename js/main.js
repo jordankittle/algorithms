@@ -56,6 +56,7 @@ function createGrid(){
 				cell.className = 'cell';
 				cell.classList.add('unvisited');
 				cell.setAttribute('data-distance', 'infinity');
+				cell.setAttribute('data-weight', 1);
 				cell.textContent = '';
 				document.getElementById('message').textContent = '';
 			}
