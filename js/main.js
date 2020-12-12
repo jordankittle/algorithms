@@ -5,12 +5,15 @@ let ctrlDown = false;
 let shiftDown = false;
 let start = null;
 let end = null;
+var windowHeight = window.innerHeight;
+var mainWidth = main.clientWidth;
 var height = 30;
 var width = 60;
-var cellSize = 20;
+var cellSize = (mainWidth/width);
+
 document.getElementById('widthInput').value = width;
 document.getElementById('heightInput').value = height;
-document.getElementById('cellSize').value = cellSize;
+document.getElementById('cellSize').value = cellSize.toFixed(1);
 
 
 
@@ -20,7 +23,8 @@ function createGrid(){
 	width = +document.getElementById('widthInput').value;
 	height = +document.getElementById('heightInput').value;
 	cellSize = +document.getElementById('cellSize').value;
-	mainWrapper.style.height = `${height*cellSize}px`;
+	//mainWrapper.style.height = `${height*cellSize}px`;
+	//mainWrapper.style.height = windowHeight/2;
 	const table = document.createElement('div');
 	table.setAttribute('id', 'grid');
 	table.className = 'grid';
@@ -144,5 +148,21 @@ function run(){
 		if(algorithm === "Dijkstra"){runDijkstra(grid, start, end)};
 	}
 }
+
+window.addEventListener('resize', () =>{
+	mainWidth = (main.clientWidth);
+	console.log(mainWidth);
+	cellSize = mainWidth/ width;
+	console.log(cellSize);
+	document.getElementById('cellSize').value = cellSize.toFixed(1);
+	const table  = document.getElementById('grid');
+	table.style.width = `${width * cellSize}px`;
+	table.style.height = `${height * cellSize}px`;
+	const cells = document.querySelectorAll('.cell');
+	for(cell of cells){
+		cell.style.width = `${cellSize}px`;
+		cell.style.height = `${cellSize}px`;
+	}
+});
 
 createGrid();
