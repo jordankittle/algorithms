@@ -22,7 +22,7 @@ function createGrid(){
 	main.innerHTML = '';
 	width = +document.getElementById('widthInput').value;
 	height = +document.getElementById('heightInput').value;
-	cellSize = +document.getElementById('cellSize').value;
+	//cellSize = +document.getElementById('cellSize').value;
 	//mainWrapper.style.height = `${height*cellSize}px`;
 	//mainWrapper.style.height = windowHeight/2;
 	const table = document.createElement('div');
@@ -69,6 +69,7 @@ function createGrid(){
 		}
 		
 	});
+	resizeGrid();
 }
 
 function getCells(){
@@ -149,7 +150,7 @@ function run(){
 	}
 }
 
-window.addEventListener('resize', () =>{
+function resizeGrid(){
 	mainWidth = (main.clientWidth);
 	console.log(mainWidth);
 	cellSize = mainWidth/ width;
@@ -163,6 +164,19 @@ window.addEventListener('resize', () =>{
 		cell.style.width = `${cellSize}px`;
 		cell.style.height = `${cellSize}px`;
 	}
-});
+}
+
+const speedOptions = [0,1,2,3,15,150];
+const speedLabels = ['Boost','Fast','Medium','Slow','Crawl','Snail'];
+const speedSlider = document.getElementById('speed');
+speedSlider.oninput = () => {
+	const selectedSpeed = speedOptions[speedSlider.value];
+	speedSlider.nextElementSibling.textContent = speedLabels[speedSlider.value];
+	speed = selectedSpeed;
+}
+speedSlider.oninput();
+
+
+window.addEventListener('resize', resizeGrid);
 
 createGrid();

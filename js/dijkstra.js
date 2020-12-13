@@ -5,7 +5,6 @@ function runDijkstra(grid, start, end){
 	let queue = 0;
 	let noAvailableNeighbors = false;
 	let diagonalAllowed = document.getElementById('diagonal').checked?true:false;
-	speed = parseInt(document.getElementById('speed').value);
 	const unvisited = [...grid];
 	const visited = [];
 	const startNum = parseInt(start.getAttribute('data-cellnum'));
@@ -63,6 +62,9 @@ function runDijkstra(grid, start, end){
 		if(!currentCell.getAttribute('data-id')){
 			console.log(currentCell);
 		}
+		setTimeout(() => {
+					currentCell.classList.add('current');
+				}, queue-speed*2);
 		const coords = currentCell.getAttribute('data-id').split(',');
 		const cellNum = parseInt(currentCell.getAttribute('data-cellnum') );
 		const cellDistance = currentCell.getAttribute('data-distance');
@@ -73,6 +75,9 @@ function runDijkstra(grid, start, end){
 		const left = () => {
 			let potentialLeft = currentCell.previousElementSibling;
 			if(!potentialLeft.classList.contains('wall') && potentialLeft.classList.contains('unvisited')){
+				// setTimeout(() => {
+				// 	potentialLeft.classList.add('next');
+				// }, queue-speed);
 				neighbors.push(potentialLeft);
 			}
 		}
@@ -80,6 +85,9 @@ function runDijkstra(grid, start, end){
 		const right = () => {
 			let potentialRight = currentCell.nextElementSibling;
 			if (!potentialRight.classList.contains('wall') && potentialRight.classList.contains('unvisited')){
+				// setTimeout(() => {
+				// 	potentialRight.classList.add('next');
+				// }, queue-speed);
 				neighbors.push(potentialRight);
 			}
 		}
@@ -87,12 +95,18 @@ function runDijkstra(grid, start, end){
 		const up = () => {
 			let potentialUp = grid[cellNum -width];
 			if(!potentialUp.classList.contains('wall') && potentialUp.classList.contains('unvisited')){
+				// setTimeout(() => {
+				// 	potentialUp.classList.add('next');
+				// }, queue-speed);
 				neighbors.push(potentialUp);
 			}
 		}
 		const down = () => {
 			let potentialDown = grid[cellNum +width];
 			if(!potentialDown.classList.contains('wall') && potentialDown.classList.contains('unvisited')){
+				// setTimeout(() => {
+				// 	potentialDown.classList.add('next');
+				// }, queue-speed);
 				neighbors.push(potentialDown);
 			}
 		}
@@ -100,6 +114,9 @@ function runDijkstra(grid, start, end){
 		const upLeft = () => {
 			let potentialUpLeft = grid[cellNum - (width+1)];
 			if(!potentialUpLeft.classList.contains('wall') && potentialUpLeft.classList.contains('unvisited')){
+				// setTimeout(() => {
+				// 	potentialUpLeft.classList.add('next');
+				// }, queue-speed);
 				const currentWeight = +potentialUpLeft.getAttribute('data-weight');
 				potentialUpLeft.setAttribute('data-weight', Math.sqrt(currentWeight*2));
 				neighbors.push(potentialUpLeft);
@@ -109,6 +126,9 @@ function runDijkstra(grid, start, end){
 		const upRight = () => {
 			let potentialUpRight = grid[cellNum - (width-1)];
 			if(!potentialUpRight.classList.contains('wall') && potentialUpRight.classList.contains('unvisited')){
+				// setTimeout(() => {
+				// 	potentialUpRight.classList.add('next');
+				// }, queue-speed);
 				const currentWeight = +potentialUpRight.getAttribute('data-weight');
 				potentialUpRight.setAttribute('data-weight', Math.sqrt(currentWeight*2));
 				neighbors.push(potentialUpRight);
@@ -118,6 +138,9 @@ function runDijkstra(grid, start, end){
 		const downLeft = () => {
 			let potentialDownLeft = grid[cellNum + (width-1)];
 			if(!potentialDownLeft.classList.contains('wall') && potentialDownLeft.classList.contains('unvisited')){
+				// setTimeout(() => {
+				// 	potentialDownLeft.classList.add('next');
+				// }, queue-speed);
 				const currentWeight = +potentialDownLeft.getAttribute('data-weight');
 				potentialDownLeft.setAttribute('data-weight', Math.sqrt(currentWeight*2));
 				neighbors.push(potentialDownLeft);
@@ -127,6 +150,9 @@ function runDijkstra(grid, start, end){
 		const downRight = () => {
 			let potentialDownRight = grid[cellNum + (width+1)];
 			if(!potentialDownRight.classList.contains('wall') && potentialDownRight.classList.contains('unvisited')){
+				// setTimeout(() => {
+				// 	potentialDownRight.classList.add('next');
+				// }, queue-speed);
 				const currentWeight = +potentialDownRight.getAttribute('data-weight');
 				potentialDownRight.setAttribute('data-weight', Math.sqrt(currentWeight*2));
 				neighbors.push(potentialDownRight);

@@ -21,7 +21,10 @@
         <div id="nav">
 
           <div id="menu">
-            
+            <label for="algorithm">Algorithm:</label>
+            <select id="algorithm" name="algorithm">
+              <option value="Dijkstra">Dijkstra</option>
+            </select>
             <label for="columns">Columns</label>
             <input type="text" name="width" id="widthInput">
             <label for="rows">Rows</label>
@@ -33,11 +36,7 @@
             <label for="diagonal">Diagonal Travel</label>
             <input type="checkbox" id="diagonal" name="diagonal" checked>
             <label for="speed">Speed</label>
-            <input type="range" min="0" max="15" value="1" class="slider" id="speed">
-            <label for="algorithm">Algorithm:</label>
-            <select id="algorithm" name="algorithm">
-              <option value="Dijkstra">Dijkstra</option>
-            </select>
+            <input type="range" min="0" max="5" value="0" step="1" class="slider" id="speed"><span id="speed-value"></span>
             <button id="run" type="button" onclick=" run()">Run Algorithm</button>
           </div>
         </div>

@@ -88,6 +88,11 @@ input[type=text] {
   cursor: pointer;
 }
 
+#speed-value{
+	width:50px;
+	display:inline-block;
+}
+
 #run:hover{
 	
 }
@@ -156,15 +161,45 @@ input[type=text] {
 }
 
 
+
+
+
+@keyframes next {
+	from {background-color: red;}
+  	to {background-color: yellow;}
+}
+
+.cell.next{
+	background: yellow;
+	animation-name: next;
+	animation-duration: ..3s;
+}
+
+
+
+
 @keyframes visited {
 	from {background-color: yellow;}
   	to {background-color: royalblue;}
 }
 
+
 .cell.visited {
 	background: royalblue;
 	animation-name: visited;
 	animation-duration: .3s;
+}
+
+@keyframes current {
+	from {background-color: white;}
+  	to {background-color: royalblue;}
+}
+
+.cell.current{
+	background: royalblue;
+	animation-name: current;
+	animation-duration: .3s;
+
 }
 
 
@@ -186,19 +221,6 @@ input[type=text] {
 	animation-name: route;
 	animation-duration: .3s;
 }
-
-@keyframes current {
-	from {background-color: yellow;}
-  	to {background-color: red;}
-}
-
-.cell.current{
-	background: red;
-	animation-name: current;
-	animation-duration: .3s;
-}
-
-
 
 
 .cell.wall{
