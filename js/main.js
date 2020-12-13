@@ -165,7 +165,7 @@ function onTouch(evt) {
       touch = evt.changedTouches[0];
       break;
     case "touchmove":
-      type = "mousemove";
+      type = "mouseover";
       message.textContent = 'Drawing';
       drawWall = true;
       evt.preventDefault();
