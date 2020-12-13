@@ -88,7 +88,7 @@ function createGrid(){
 
 
 	resizeGrid();
-	//addRandomNodes();
+	addRandomNodes();
 }
 
 function getCells(){
