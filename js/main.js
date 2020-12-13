@@ -4,6 +4,8 @@ const main = document.getElementById('main');
 const header = document.getElementById('header');
 const footer = document.getElementById('footer');
 const message = document.getElementById('message');
+const widthInput = document.getElementById('widthInput');
+const heightInput = document.getElementById('heightInput')
 let ctrlDown = false;
 let shiftDown = false;
 let start = null;
@@ -16,16 +18,18 @@ var width = 60;
 var cellWidth = (mainWidth/width);
 var cellHeight = (mainHeight/height);
 
-document.getElementById('widthInput').value = width;
-document.getElementById('heightInput').value = height;
+widthInput.value = width;
+heightInput.value = height;
 
 
 
 //Create Grid
 function createGrid(){
 	main.innerHTML = '';
-	width = +document.getElementById('widthInput').value;
-	height = +document.getElementById('heightInput').value;
+	width  = Math.floor(+widthInput.value);
+	height = Math.floor(+heightInput.value);
+	widthInput.value = width;
+	heightInput.value = height;
 	message.textContent = '';
 	const grid = document.createElement('div');
 	grid.setAttribute('id', 'grid');

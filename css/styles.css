@@ -11,7 +11,7 @@ body {
 
 #header{
 	margin:auto;
-	width: 90%;
+	width: 100%;
 	display:flex;
 	align-items: center;
 	flex-wrap: wrap;
@@ -19,6 +19,7 @@ body {
 }
 #title{
 	display:inline-block;
+	flex: 1;
 
 }
 
@@ -167,11 +168,13 @@ input[type=text] {
 
 #footer{
 	margin:auto;
-	width: 90%;
+	width: 100%;
 	text-align: center;
 	font-size: .75em;
 	color: white;
 	font-weight: bold;
+	border: solid black;
+	border-width: 0px 1px;
 }
 
 .grid{
@@ -264,13 +267,10 @@ input[type=text] {
 	overflow: auto;
 }
 
-/*#page-wrapper{
-	min-height: calc(100vh - 42px);
-}
-
 
 @media (min-width: 769px){
-	#page-wrapper{
-		min-height: calc(100vh - 42px);
+	
+	#header {
+		width:90%;
 	}
-}*/
+}
