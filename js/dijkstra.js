@@ -25,7 +25,6 @@ function runDijkstra(grid, start, end){
 			return;
 		}
 		for(let i = 0; i < visited.length; i++){
-			console.log('searching cells');
 			if(visited[i] === end){
 				console.log('done');
 				done = true;
@@ -35,7 +34,6 @@ function runDijkstra(grid, start, end){
 				}, queue);
 				return;
 			}
-			console.log('queueing more cells for search');
 			getNeighbors(visited[i]);
 			
 		}

@@ -45,15 +45,17 @@ body {
 
 
 button{
-	background: white;
+	background: dodgerblue;
 	color:black;
 	border-radius:30px;
 	height: 25px;
+	color: white;
+	font-weight: 600;
 
 }
 button:hover{
-	background: dodgerblue;
-	color:white;
+	background: yellow;
+	color: black;
 
 }
 
@@ -61,6 +63,10 @@ select, input{
 	border-radius:30px;
 	vertical-align: middle;
 	height: 25px;
+	background: dodgerblue;
+	color: white;
+	font-weight: 600;
+	padding-left: 4px;
 
 }
 
@@ -196,6 +202,16 @@ input[type=text] {
 	
 }
 
+.main-button{
+	width:100px;
+	background: yellow;
+	color:black;
+}
+
+.hidden{
+	display: none;
+}
+
 
 
 
@@ -227,12 +243,12 @@ input[type=text] {
 }
 
 @keyframes current {
-	from {background-color: white;}
-  	to {background-color: royalblue;}
+	from {background-color: yellow;}
+  	to {background-color: dodgerblue;}
 }
 
 .cell.current{
-	background: royalblue;
+	background: dodgerblue;
 	animation-name: current;
 	animation-duration: .3s;
 

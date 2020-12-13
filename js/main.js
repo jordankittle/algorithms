@@ -6,6 +6,8 @@ const footer = document.getElementById('footer');
 const message = document.getElementById('message');
 const widthInput = document.getElementById('widthInput');
 const heightInput = document.getElementById('heightInput')
+const startButton = document.getElementById('run');
+const resetButton = document.getElementById('reset');
 let ctrlDown = false;
 let shiftDown = false;
 let start = null;
@@ -25,6 +27,9 @@ heightInput.value = height;
 
 //Create Grid
 function createGrid(){
+	toggle(resetButton, startButton);
+	start = null;
+	end = null;
 	main.innerHTML = '';
 	width  = Math.floor(+widthInput.value);
 	height = Math.floor(+heightInput.value);
@@ -96,9 +101,9 @@ function addRandomNodes(){
 	while(end === start){
 		end = randomCell();
 	}
-	console.log(start === end?true:false);
 	start.classList.add('start');
 	end.classList.add('end');
+	message.textContent = 'Ready';
 
 }
 
@@ -117,6 +122,7 @@ function handleCellClick(e){
 	start = e.target;
 	start.classList.add('start');
 	}
+	if(start && end) message.textContent = 'Ready';
 	
 }
 function handleMouseOver(e){
@@ -153,9 +159,12 @@ document.addEventListener('keyup', e => {
 
 function run(){
 	if(start !== null && end != null){
+		toggle(startButton, resetButton);
 		const algorithm = document.getElementById('algorithm').value;
 		const grid = getCells();
 		if(algorithm === "Dijkstra"){runDijkstra(grid, start, end)};
+	} else {
+		message.textContent = "Add Nodes";
 	}
 }
 
@@ -173,6 +182,11 @@ function resizeGrid(){
 		cell.style.height = `${cellHeight}px`;
 	}
 
+}
+
+function toggle(hide, show){
+	if(!hide.classList.contains('hidden')) hide.classList.add('hidden');
+	show.classList.remove('hidden');
 }
 
 const speedOptions = [0,1,2,3,15,150];
