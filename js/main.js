@@ -97,9 +97,10 @@ function getCells(){
 
 
 function addRandomNodes(){
-	const cells = getCells();
-	const randomCell = () => cells[Math.floor(Math.random() * cells.length)];
-	for(cell of cells){
+	const cells = Array.from(getCells());
+	const safeCells = cells.filter((el) => !el.classList.contains('wall') );
+	const randomCell = () => safeCells[Math.floor(Math.random() * safeCells.length)];
+	for(cell of safeCells){
 		cell.classList.remove('end');
 		cell.classList.remove('start');
 	}
@@ -179,7 +180,7 @@ function onTouch(e) {
   }
 
   	//var mouseEvent = new MouseEvent(type);
- 	if(drawWall === true  && !target.classList.contains('start') && !target.classList.contains('end')){
+ 	if(target && drawWall === true  && !target.classList.contains('start') && !target.classList.contains('end')){
 		if(document.getElementById('diagonal').checked && target.getAttribute('data-id').split(',')[0] % width !== 0){
 			target.classList.add('wall');
 			target.nextElementSibling.classList.add('wall');
