@@ -166,11 +166,13 @@ function onTouch(evt) {
       break;
     case "touchmove":
       type = "mousemove";
+      message.textContent = 'Drawing';
       drawWall = true;
       evt.preventDefault();
       touch = evt.changedTouches[0];
       break;
-    case "touchend":        
+    case "touchend": 
+      message.textContent = '';       
       type = "mouseup";
       drawWall = false;
       touch = evt.changedTouches[0];
