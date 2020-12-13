@@ -128,14 +128,14 @@ function handleMouseOver(e){
 }
 
 document.addEventListener('keydown', e => {
-	if(e.key === 'Control'){
+	if(e.key === 'Control' || e){
 		ctrlDown = true;
 	} else if(e.key === 'Shift'){
 		shiftDown = true;
 	}
 });
 document.addEventListener('keyup', e => {
-	if(e.key === 'Control'){
+	if(e.key === 'Control' || 'e'){
 		ctrlDown = false;
 	} else if(e.key === 'Shift'){
 		shiftDown = false;
