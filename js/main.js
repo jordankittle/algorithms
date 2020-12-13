@@ -16,7 +16,7 @@ var windowHeight = window.innerHeight;
 var mainWidth = main.clientWidth;
 var mainHeight = window.innerHeight - (header.clientHeight + footer.clientHeight);
 var height = 30;
-var width = 60;
+var width = mainWidth > 769 ? mainWidth > 1200 ? 90 : 60 : 30;
 var cellWidth = (mainWidth/width);
 var cellHeight = (mainHeight/height);
 
