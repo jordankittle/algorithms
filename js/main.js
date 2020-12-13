@@ -166,10 +166,10 @@ function onTouch(evt) {
       break;
     case "touchmove":
       type = "mouseover";
-      message.textContent = touch.clientX, touch.clientY;
       drawWall = true;
       evt.preventDefault();
       touch = evt.changedTouches[0];
+      message.textContent = touch.clientX + ',' + touch.clientY;
       break;
     case "touchend": 
       message.textContent = '';       
