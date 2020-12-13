@@ -8,8 +8,8 @@ const widthInput = document.getElementById('widthInput');
 const heightInput = document.getElementById('heightInput')
 const startButton = document.getElementById('run');
 const resetButton = document.getElementById('reset');
-let ctrlDown = false;
-let shiftDown = false;
+let addEndPoint = false;
+let drawWall = false;
 let start = null;
 let end = null;
 var windowHeight = window.innerHeight;
@@ -81,7 +81,14 @@ function createGrid(){
 		}
 		
 	});
+
+	grid.addEventListener("touchstart", onTouch, true);
+	grid.addEventListener("touchmove", onTouch, true);
+	grid.addEventListener("touchend", onTouch, true);
+
+
 	resizeGrid();
+	//addRandomNodes();
 }
 
 function getCells(){
@@ -109,7 +116,7 @@ function addRandomNodes(){
 
 function handleCellClick(e){
 	const cells = getCells();
-	if(ctrlDown === true && !e.target.classList.contains('wall') && !e.target.classList.contains('start')){
+	if(addEndPoint === true && !e.target.classList.contains('wall') && !e.target.classList.contains('start')){
 		for(cell of cells){
 		cell.classList.remove('end');
 		}
@@ -126,10 +133,10 @@ function handleCellClick(e){
 	
 }
 function handleMouseOver(e){
-	if(shiftDown === true && ctrlDown === true){
+	if(drawWall === true && addEndPoint === true){
 		e.target.classList.remove('wall');
 	}
-	else if(shiftDown === true  && !e.target.classList.contains('start') && !e.target.classList.contains('end')){
+	else if(drawWall === true  && !e.target.classList.contains('start') && !e.target.classList.contains('end')){
 		if(document.getElementById('diagonal').checked && e.target.getAttribute('data-id').split(',')[0] % width !== 0){
 			e.target.classList.add('wall');
 			e.target.nextElementSibling.classList.add('wall');
@@ -140,20 +147,57 @@ function handleMouseOver(e){
 	} 
 }
 
+
+////////////Touch Screen///////////////
+
+function onTouch(evt) {
+  
+  if (evt.touches.length > 1 || (evt.type == "touchend" && evt.touches.length > 0))
+    return;
+
+  var newEvt = document.createEvent("MouseEvents");
+  var type = null;
+  var touch = null;
+
+  switch (evt.type) {
+    case "touchstart": 
+      type = "mousedown";
+      touch = evt.changedTouches[0];
+      break;
+    case "touchmove":
+      type = "mousemove";
+      evt.preventDefault();
+      touch = evt.changedTouches[0];
+      break;
+    case "touchend":        
+      type = "mouseup";
+      touch = evt.changedTouches[0];
+      break;
+  }
+
+  newEvt.initMouseEvent(type, true, true, evt.originalTarget.ownerDocument.defaultView, 0,
+    touch.screenX, touch.screenY, touch.clientX, touch.clientY,
+    evt.ctrlKey, evt.altKey, evt.shiftKey, evt.metaKey, 0, null);
+  evt.originalTarget.dispatchEvent(newEvt);
+}
+///////////////////////////////////////
+
+
+
 document.addEventListener('keydown', e => {
 	if(e.key === 'Control' || e.key === 'e'){
-		ctrlDown = true;
-	} else if(e.key === 'Shift'){
+		addEndPoint = true;
+	} else if(e.key === 'Shift' || e.key === 'w'){
 		console.log('shift down');
-		shiftDown = true;
+		drawWall = true;
 	}
 });
 document.addEventListener('keyup', e => {
 	if(e.key === 'Control' || e.key === 'e'){
-		ctrlDown = false;
-	} else if(e.key === 'Shift'){
+		addEndPoint = false;
+	} else if(e.key === 'Shift' || e.key === 'w'){
 		console.log('shift up');
-		shiftDown = false;
+		drawWall = false;
 	}
 });
 
