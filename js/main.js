@@ -150,39 +150,47 @@ function handleMouseOver(e){
 
 ////////////Touch Screen///////////////
 
-function onTouch(evt) {
+
+function onTouch(e) {
   
-  if (evt.touches.length > 1 || (evt.type == "touchend" && evt.touches.length > 0))
+  if (e.touches.length > 1 || (e.type == "touchend" && e.touches.length > 0))
     return;
+ 	var type = null;
+  	var touch = null;
 
-  var newEvt = document.createEvent("MouseEvents");
-  var type = null;
-  var touch = null;
-
-  switch (evt.type) {
-    case "touchstart": 
+  	switch (e.type) {
+   	 case "touchstart": 
       type = "mousedown";
-      touch = evt.changedTouches[0];
+      touch = e.changedTouches[0];
       break;
     case "touchmove":
-      type = "mouseover";
+      type = "mousemove";
       drawWall = true;
-      evt.preventDefault();
-      touch = evt.changedTouches[0];
-      message.textContent = touch.clientX + ',' + touch.clientY;
+      e.preventDefault();
+      touch = e.changedTouches[0];
+      var target = document.elementFromPoint(touch.pageX, touch.pageY);
       break;
     case "touchend": 
       message.textContent = '';       
       type = "mouseup";
       drawWall = false;
-      touch = evt.changedTouches[0];
+      touch = e.changedTouches[0];
       break;
   }
 
-  newEvt.initMouseEvent(type, true, true, evt.originalTarget.ownerDocument.defaultView, 0,
-    touch.screenX, touch.screenY, touch.clientX, touch.clientY,
-    evt.ctrlKey, evt.altKey, evt.shiftKey, evt.metaKey, 0, null);
-  evt.Target.dispatchEvent(newEvt);
+  	//var mouseEvent = new MouseEvent(type);
+ 	if(drawWall === true  && !target.classList.contains('start') && !target.classList.contains('end')){
+		if(document.getElementById('diagonal').checked && target.getAttribute('data-id').split(',')[0] % width !== 0){
+			target.classList.add('wall');
+			target.nextElementSibling.classList.add('wall');
+
+		} else {
+			target.classList.add('wall');
+		}
+	}
+
+  	
+
 }
 ///////////////////////////////////////
 
