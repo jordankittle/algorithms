@@ -17,7 +17,6 @@ var cellHeight = (mainHeight/height);
 
 document.getElementById('widthInput').value = width;
 document.getElementById('heightInput').value = height;
-document.getElementById('cellSize').value = cellWidth.toFixed(1);
 
 
 
@@ -161,7 +160,6 @@ function resizeGrid(){
 	mainHeight = window.innerHeight - (header.clientHeight + footer.clientHeight);
 	cellWidth = mainWidth/ width;
 	cellHeight = mainHeight/ height;
-	document.getElementById('cellSize').value = cellWidth.toFixed(1);
 	const grid  = document.getElementById('grid');
 	grid.style.width = `${width * cellWidth}px`;
 	grid.style.height = `${height * cellHeight}px`;
