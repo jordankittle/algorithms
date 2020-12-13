@@ -1,19 +1,23 @@
 //main.js - Jordan Kittle
 const mainWrapper = document.getElementById('main-wrapper');
 const main = document.getElementById('main');
+const header = document.getElementById('header');
+const footer = document.getElementById('footer');
 let ctrlDown = false;
 let shiftDown = false;
 let start = null;
 let end = null;
 var windowHeight = window.innerHeight;
 var mainWidth = main.clientWidth;
+var mainHeight = window.innerHeight - (header.clientHeight + footer.clientHeight);
 var height = 30;
 var width = 60;
-var cellSize = (mainWidth/width);
+var cellWidth = (mainWidth/width);
+var cellHeight = (mainHeight/height);
 
 document.getElementById('widthInput').value = width;
 document.getElementById('heightInput').value = height;
-document.getElementById('cellSize').value = cellSize.toFixed(1);
+document.getElementById('cellSize').value = cellWidth.toFixed(1);
 
 
 
@@ -25,36 +29,36 @@ function createGrid(){
 	//cellSize = +document.getElementById('cellSize').value;
 	//mainWrapper.style.height = `${height*cellSize}px`;
 	//mainWrapper.style.height = windowHeight/2;
-	const table = document.createElement('div');
-	table.setAttribute('id', 'grid');
-	table.className = 'grid';
-	main.append(table);
-	table.style.width = `${width * cellSize}px`;
-	table.style.height = `${height * cellSize}px`;
+	const grid = document.createElement('div');
+	grid.setAttribute('id', 'grid');
+	grid.className = 'grid';
+	main.append(grid);
+	grid.style.width = `${width * cellWidth}px`;
+	grid.style.height = `${height * cellHeight}px`;
 
 	for(let i=0; i < width * height; i++){
 		const cell = document.createElement('div');
-		cell.style.width = `${cellSize}px`;
-		cell.style.height = `${cellSize}px`;
+		cell.style.width = `${cellWidth}px`;
+		cell.style.height = `${cellHeight}px`;
 		cell.className = "cell";
 		cell.classList.add('unvisited');
 		cell.setAttribute('data-cellNum', i);
 		cell.setAttribute('data-distance', 'infinity');
 		cell.setAttribute('data-weight', 1);
 		cell.setAttribute('data-routedFrom', null);
-		table.append(cell);
+		grid.append(cell);
 
 	}
-	const cells = table.querySelectorAll('.cell');
+	const cells = grid.querySelectorAll('.cell');
 	let counter = 0;
 	for(let y=height; y > 0; y--){
 		for(let x = 1; x <= width; x++){
 			cells[counter++].setAttribute('data-id', `${x},${y}`);
 		}
 	}
-	table.addEventListener('click', handleCellClick);
-	table.addEventListener('mouseover', handleMouseOver);
-	table.addEventListener('mousedown', e => {
+	grid.addEventListener('click', handleCellClick);
+	grid.addEventListener('mouseover', handleMouseOver);
+	grid.addEventListener('mousedown', e => {
 		if(e.which === 2){
 			for(cell of cells){
 				cell.className = 'cell';
@@ -153,19 +157,20 @@ function run(){
 }
 
 function resizeGrid(){
-	mainWidth = (main.clientWidth);
-	console.log(mainWidth);
-	cellSize = mainWidth/ width;
-	console.log(cellSize);
-	document.getElementById('cellSize').value = cellSize.toFixed(1);
-	const table  = document.getElementById('grid');
-	table.style.width = `${width * cellSize}px`;
-	table.style.height = `${height * cellSize}px`;
+	mainWidth = main.clientWidth;
+	mainHeight = window.innerHeight - (header.clientHeight + footer.clientHeight);
+	cellWidth = mainWidth/ width;
+	cellHeight = mainHeight/ height;
+	document.getElementById('cellSize').value = cellWidth.toFixed(1);
+	const grid  = document.getElementById('grid');
+	grid.style.width = `${width * cellWidth}px`;
+	grid.style.height = `${height * cellHeight}px`;
 	const cells = document.querySelectorAll('.cell');
 	for(cell of cells){
-		cell.style.width = `${cellSize}px`;
-		cell.style.height = `${cellSize}px`;
+		cell.style.width = `${cellWidth}px`;
+		cell.style.height = `${cellHeight}px`;
 	}
+
 }
 
 const speedOptions = [0,1,2,3,15,150];

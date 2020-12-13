@@ -56,15 +56,22 @@ function runDijkstra(grid, start, end){
 		tracePath(previousCell[0]);
 
 	}
+	
+	function delayVisual(element, className, delay){
+		 setTimeout(() => {
+		 	element.classList.add(className);
+		 }, delay);
+	}
 
 
 	function getNeighbors(currentCell){
 		if(!currentCell.getAttribute('data-id')){
 			console.log(currentCell);
 		}
-		setTimeout(() => {
-					currentCell.classList.add('current');
-				}, queue-speed*2);
+		delayVisual(currentCell, 'current', queue-speed);
+		// setTimeout(() => {
+		// 			currentCell.classList.add('current');
+		// 		}, queue-speed*2);
 		const coords = currentCell.getAttribute('data-id').split(',');
 		const cellNum = parseInt(currentCell.getAttribute('data-cellnum') );
 		const cellDistance = currentCell.getAttribute('data-distance');
@@ -240,9 +247,7 @@ function runDijkstra(grid, start, end){
 			if(neighborDistance === 'infinity'){
 				neighbor.setAttribute('data-distance', +cellDistance + neighborWeight );
 				neighbor.classList.remove('unvisited');
-				setTimeout(() => {
-					neighbor.classList.add('visited');
-				}, queue);
+				delayVisual(neighbor, 'visited', queue);
 				queue += speed;
 				routeNeighbor();
 				
@@ -252,9 +257,7 @@ function runDijkstra(grid, start, end){
 				console.log('neighborDistance existing: ' + neighborDistance + ' vs tentative distance: ' + tentativeDistance);
 				neighbor.setAttribute('data-distance', tentativeDistance );
 				neighbor.classList.remove('unvisited');
-				setTimeout(() => {
-					neighbor.classList.add('visited');
-				}, queue);
+				delayVisual(neighbor, 'visited', queue);
 				queue += speed;
 				routeNeighbor();
 			} else {

@@ -12,43 +12,44 @@
     <title>Algorithms</title>
   </head>
   <body>
-    <div id="header-wrapper">
-      <div id="header" class="clearfix">
-        <div id="title">
-          <h1>Algorithms</h1>
-          <h2 id="message"></h2>
-        </div>
-        <div id="nav">
+    <div id="page-wrapper">
+      <div id="header-wrapper">
+        <div id="header" class="clearfix">
+          <div id="title">
+            <h1>Algorithms</h1>
+            <h2 id="message"></h2>
+          </div>
+          <div id="nav">
 
-          <div id="menu">
-            <label for="algorithm">Algorithm:</label>
-            <select id="algorithm" name="algorithm">
-              <option value="Dijkstra">Dijkstra</option>
-            </select>
-            <label for="columns">Columns</label>
-            <input type="text" name="width" id="widthInput">
-            <label for="rows">Rows</label>
-            <input type="text" name="height" id="heightInput">
-            <label for="cellSize">px</label>
-            <input type="text" name="cellSize" id="cellSize">
-            <button type="button" onclick="createGrid()">Draw Grid</button>
-            <button type="button" onclick="addRandomNodes()">Random Nodes</button><br>
-            <label for="diagonal">Diagonal Travel</label>
-            <input type="checkbox" id="diagonal" name="diagonal" checked>
-            <label for="speed">Speed</label>
-            <input type="range" min="0" max="5" value="0" step="1" class="slider" id="speed"><span id="speed-value"></span>
-            <button id="run" type="button" onclick=" run()">Run Algorithm</button>
+            <div id="menu">
+              <label for="algorithm">Algorithm:</label>
+              <select id="algorithm" name="algorithm">
+                <option value="Dijkstra">Dijkstra</option>
+              </select>
+              <label for="columns">Columns</label>
+              <input type="text" name="width" id="widthInput">
+              <label for="rows">Rows</label>
+              <input type="text" name="height" id="heightInput">
+              <label for="cellSize">px</label>
+              <input type="text" name="cellSize" id="cellSize">
+              <button type="button" onclick="createGrid()">Draw Grid</button>
+              <button type="button" onclick="addRandomNodes()">Random Nodes</button><br>
+              <label for="diagonal">Diagonal Travel</label>
+              <input type="checkbox" id="diagonal" name="diagonal" checked>
+              <label for="speed">Speed</label>
+              <input type="range" min="0" max="5" value="0" step="1" class="slider" id="speed"><span id="speed-value"></span>
+              <button id="run" type="button" onclick=" run()">Run Algorithm</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div id="main-wrapper">
-      <div id="main">
+      <div id="main-wrapper">
+        <div id="main">
 
+        </div>
       </div>
     </div>
-
     <div id="footer-wrapper">
       <div id="footer">
       Instructions: 
@@ -57,6 +58,7 @@
       Middle Click to Start Over
       </div>
     </div>
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
