@@ -182,7 +182,7 @@ function onTouch(evt) {
   newEvt.initMouseEvent(type, true, true, evt.originalTarget.ownerDocument.defaultView, 0,
     touch.screenX, touch.screenY, touch.clientX, touch.clientY,
     evt.ctrlKey, evt.altKey, evt.shiftKey, evt.metaKey, 0, null);
-  evt.originalTarget.dispatchEvent(newEvt);
+  evt.Target.dispatchEvent(newEvt);
 }
 ///////////////////////////////////////
 
