@@ -31,12 +31,15 @@
               <label for="rows">Rows</label>
               <input type="text" name="height" id="heightInput">
               <button type="button" onclick="createGrid()">Draw Grid</button>
-              <button type="button" onclick="addRandomNodes()">Random Nodes</button><br>
-              <label for="diagonal">Diagonal Travel</label>
-              <input type="checkbox" id="diagonal" name="diagonal" checked>
-              <label for="speed">Speed</label>
-              <input type="range" min="0" max="5" value="0" step="1" class="slider" id="speed"><span id="speed-value"></span>
+              <button type="button" onclick="addRandomNodes()">Random Nodes</button>
               <button id="run" type="button" onclick=" run()">Run Algorithm</button>
+              
+              <span id="speed-and-diagonal">
+                <label for="diagonal">Diagonal Travel</label>
+                <input type="checkbox" id="diagonal" name="diagonal" checked>
+                <label for="speed">Speed</label>
+                <input type="range" min="0" max="5" value="0" step="1" class="slider" id="speed"><span id="speed-value"></span>
+              </span>
             </div>
           </div>
         </div>
@@ -50,10 +53,9 @@
     </div>
     <div id="footer-wrapper">
       <div id="footer">
-      Instructions: 
-      Click to add Start Point - Ctrl+Click to add End Point<br>
-      Shift+MouseOver to add walls - Ctrl+Shift+Mouseover to Erase Wall<br>
-      Middle Click to Start Over
+      - Click to add Start Point - Ctrl+Click to add End Point -
+      Shift+MouseOver to add walls - Ctrl+Shift+Mouseover to Erase Wall -
+      Middle Click to Start Over -
       </div>
     </div>
 
