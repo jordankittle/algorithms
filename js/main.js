@@ -3,6 +3,7 @@ const mainWrapper = document.getElementById('main-wrapper');
 const main = document.getElementById('main');
 const header = document.getElementById('header');
 const footer = document.getElementById('footer');
+const message = document.getElementById('message');
 let ctrlDown = false;
 let shiftDown = false;
 let start = null;
@@ -25,9 +26,7 @@ function createGrid(){
 	main.innerHTML = '';
 	width = +document.getElementById('widthInput').value;
 	height = +document.getElementById('heightInput').value;
-	//cellSize = +document.getElementById('cellSize').value;
-	//mainWrapper.style.height = `${height*cellSize}px`;
-	//mainWrapper.style.height = windowHeight/2;
+	message.textContent = '';
 	const grid = document.createElement('div');
 	grid.setAttribute('id', 'grid');
 	grid.className = 'grid';
@@ -57,6 +56,7 @@ function createGrid(){
 	}
 	grid.addEventListener('click', handleCellClick);
 	grid.addEventListener('mouseover', handleMouseOver);
+	
 	grid.addEventListener('mousedown', e => {
 		if(e.which === 2){
 			for(cell of cells){
@@ -65,7 +65,7 @@ function createGrid(){
 				cell.setAttribute('data-distance', 'infinity');
 				cell.setAttribute('data-weight', 1);
 				cell.textContent = '';
-				document.getElementById('message').textContent = '';
+				message.textContent = '';
 			}
 			start = null;
 			end = null;

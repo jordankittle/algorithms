@@ -3,12 +3,12 @@
 function runDijkstra(grid, start, end){
 	let cycle = 0;
 	let queue = 0;
+	let done = false;
 	let noAvailableNeighbors = false;
 	let diagonalAllowed = document.getElementById('diagonal').checked?true:false;
 	const unvisited = [...grid];
 	const visited = [];
 	const startNum = parseInt(start.getAttribute('data-cellnum'));
-	const message = document.getElementById('message');
 	message.textContent = '';
 	start.classList.remove('unvisited');
 	start.classList.add('visited');
@@ -17,7 +17,7 @@ function runDijkstra(grid, start, end){
 
 
 	while(unvisited.length > 0 ){
-
+		if(done) break;
 		if(noAvailableNeighbors){
 			setTimeout(() => {
 					message.textContent = "No Route Found";
@@ -25,15 +25,17 @@ function runDijkstra(grid, start, end){
 			return;
 		}
 		for(let i = 0; i < visited.length; i++){
+			console.log('searching cells');
 			if(visited[i] === end){
-				
+				console.log('done');
+				done = true;
 				setTimeout(() => {
 					tracePath(end);
 					message.textContent = "Route Found";
 				}, queue);
 				return;
 			}
-
+			console.log('queueing more cells for search');
 			getNeighbors(visited[i]);
 			
 		}
@@ -247,7 +249,7 @@ function runDijkstra(grid, start, end){
 			if(neighborDistance === 'infinity'){
 				neighbor.setAttribute('data-distance', +cellDistance + neighborWeight );
 				neighbor.classList.remove('unvisited');
-				delayVisual(neighbor, 'visited', queue);
+				//delayVisual(neighbor, 'visited', queue);
 				queue += speed;
 				routeNeighbor();
 				
@@ -257,7 +259,7 @@ function runDijkstra(grid, start, end){
 				console.log('neighborDistance existing: ' + neighborDistance + ' vs tentative distance: ' + tentativeDistance);
 				neighbor.setAttribute('data-distance', tentativeDistance );
 				neighbor.classList.remove('unvisited');
-				delayVisual(neighbor, 'visited', queue);
+				//delayVisual(neighbor, 'visited', queue);
 				queue += speed;
 				routeNeighbor();
 			} else {
