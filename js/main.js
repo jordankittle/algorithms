@@ -10,6 +10,7 @@ const startButton = document.getElementById('run');
 const resetButton = document.getElementById('reset');
 let addEndPoint = false;
 let drawWall = false;
+let drawHill = false;
 let start = null;
 let end = null;
 var windowHeight = window.innerHeight;
@@ -136,16 +137,42 @@ function handleCellClick(e){
 function handleMouseOver(e){
 	if(drawWall === true && addEndPoint === true){
 		e.target.classList.remove('wall');
-	}
-	else if(drawWall === true  && !e.target.classList.contains('start') && !e.target.classList.contains('end')){
-		if(document.getElementById('diagonal').checked && e.target.getAttribute('data-id').split(',')[0] % width !== 0){
-			e.target.classList.add('wall');
-			e.target.nextElementSibling.classList.add('wall');
+		e.target.classList.remove('hill');
+	} else if (
+			  	drawWall === true
+			  	&& !e.target.classList.contains('start') 
+			  	&& !e.target.classList.contains('end')
+			  	&& !e.target.nextElementSibling.classList.contains('start')
+			  	&& !e.target.nextElementSibling.classList.contains('end')
+			  ){
+				if(document.getElementById('diagonal').checked && e.target.getAttribute('data-id').split(',')[0] % width !== 0){
+				e.target.classList.add('wall');
+				e.target.nextElementSibling.classList.add('wall');
 
-		} else {
-			e.target.classList.add('wall');
-		}
-	} 
+				} else {
+					e.target.classList.add('wall');
+				}
+			} 
+	if(drawHill === true && addEndPoint === true){
+		e.target.classList.remove('hill');
+	} else if (
+			  	drawHill === true
+			  	&& !e.target.classList.contains('start') 
+			  	&& !e.target.classList.contains('end')
+			  	&& !e.target.nextElementSibling.classList.contains('start')
+			  	&& !e.target.nextElementSibling.classList.contains('end')
+			  ){
+				if(document.getElementById('diagonal').checked && e.target.getAttribute('data-id').split(',')[0] % width !== 0){
+				e.target.classList.add('hill');
+				e.target.setAttribute('data-weight',5);
+				e.target.nextElementSibling.classList.add('hill');
+				e.target.nextElementSibling.setAttribute('data-weight',5);
+
+				} else {
+					e.target.classList.add('hill');
+					e.target.setAttribute('data-weight',5);
+				}
+			} 		
 }
 
 
@@ -203,6 +230,8 @@ document.addEventListener('keydown', e => {
 	} else if(e.key === 'Shift' || e.key === 'w'){
 		console.log('shift down');
 		drawWall = true;
+	} else if(e.key === 'h'){
+		drawHill = true;
 	}
 });
 document.addEventListener('keyup', e => {
@@ -211,6 +240,8 @@ document.addEventListener('keyup', e => {
 	} else if(e.key === 'Shift' || e.key === 'w'){
 		console.log('shift up');
 		drawWall = false;
+	} else if(e.key === 'h'){
+		drawHill = false;
 	}
 });
 

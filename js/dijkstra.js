@@ -7,7 +7,7 @@ function runDijkstra(grid, start, end){
 	let noAvailableNeighbors = false;
 	let diagonalAllowed = document.getElementById('diagonal').checked?true:false;
 	const unvisited = [...grid];
-	const visited = [];
+	const queued = [];
 	const startNum = parseInt(start.getAttribute('data-cellnum'));
 	message.textContent = '';
 	start.classList.remove('unvisited');
@@ -16,7 +16,10 @@ function runDijkstra(grid, start, end){
 	getNeighbors(start);
 
 
-	while(unvisited.length > 0 ){
+	while(queued.length > 0 ){
+		console.log('1');
+		
+		console.log(queued);
 		if(done) break;
 		if(noAvailableNeighbors){
 			setTimeout(() => {
@@ -24,8 +27,19 @@ function runDijkstra(grid, start, end){
 				}, queue);
 			return;
 		}
-		for(let i = 0; i < visited.length; i++){
-			if(visited[i] === end){
+		while(queued.length > 0){
+			queued.sort((a,b) => {
+				let aWeight = +a.getAttribute('data-distance');
+				let bWeight = +b.getAttribute('data-distance');
+				if( aWeight === bWeight ){
+					return 0
+				} else if( aWeight < bWeight){
+					return -1
+				} else {
+					return 1
+				}
+			});
+			if(queued[0] === end){
 				console.log('done');
 				done = true;
 				setTimeout(() => {
@@ -34,7 +48,7 @@ function runDijkstra(grid, start, end){
 				}, queue);
 				return;
 			}
-			getNeighbors(visited[i]);
+			getNeighbors(queued.splice(0,1)[0]);
 			
 		}
 	}
@@ -78,6 +92,10 @@ function runDijkstra(grid, start, end){
 		const x = parseInt(coords[0]);
 		const y = parseInt(coords[1]);
 		const neighbors = [];
+
+		const pythag = (a,b) => {
+			return Math.sqrt(Math.pow(a,2) + Math.pow(b,2));
+		}
 		
 		const left = () => {
 			let potentialLeft = currentCell.previousElementSibling;
@@ -85,6 +103,8 @@ function runDijkstra(grid, start, end){
 				// setTimeout(() => {
 				// 	potentialLeft.classList.add('next');
 				// }, queue-speed);
+				const currentWeight = +potentialLeft.getAttribute('data-weight');
+				potentialLeft.setAttribute('data-weight-cache', currentWeight)
 				neighbors.push(potentialLeft);
 			}
 		}
@@ -95,6 +115,8 @@ function runDijkstra(grid, start, end){
 				// setTimeout(() => {
 				// 	potentialRight.classList.add('next');
 				// }, queue-speed);
+				const currentWeight = +potentialRight.getAttribute('data-weight');
+				potentialRight.setAttribute('data-weight-cache', currentWeight)
 				neighbors.push(potentialRight);
 			}
 		}
@@ -105,6 +127,8 @@ function runDijkstra(grid, start, end){
 				// setTimeout(() => {
 				// 	potentialUp.classList.add('next');
 				// }, queue-speed);
+				const currentWeight = +potentialUp.getAttribute('data-weight');
+				potentialUp.setAttribute('data-weight-cache', currentWeight)
 				neighbors.push(potentialUp);
 			}
 		}
@@ -114,61 +138,74 @@ function runDijkstra(grid, start, end){
 				// setTimeout(() => {
 				// 	potentialDown.classList.add('next');
 				// }, queue-speed);
+				const currentWeight = +potentialDown.getAttribute('data-weight');
+				potentialDown.setAttribute('data-weight-cache', currentWeight)
 				neighbors.push(potentialDown);
 			}
 		}
 
 		const upLeft = () => {
 			let potentialUpLeft = grid[cellNum - (width+1)];
+			let potentialUp = grid[cellNum -width];
 			if(!potentialUpLeft.classList.contains('wall') && potentialUpLeft.classList.contains('unvisited')){
 				// setTimeout(() => {
 				// 	potentialUpLeft.classList.add('next');
 				// }, queue-speed);
+				const upWeight = potentialUp.getAttribute('data-weight');
 				const currentWeight = +potentialUpLeft.getAttribute('data-weight');
-				potentialUpLeft.setAttribute('data-weight', Math.sqrt(currentWeight*2));
+				const travelWeight = pythag(upWeight, currentWeight);
+				potentialUpLeft.setAttribute('data-weight-cache', travelWeight);
 				neighbors.push(potentialUpLeft);
 			}
 		}
 
 		const upRight = () => {
 			let potentialUpRight = grid[cellNum - (width-1)];
+			let potentialUp = grid[cellNum -width];
 			if(!potentialUpRight.classList.contains('wall') && potentialUpRight.classList.contains('unvisited')){
 				// setTimeout(() => {
 				// 	potentialUpRight.classList.add('next');
 				// }, queue-speed);
+				const upWeight = potentialUp.getAttribute('data-weight');
 				const currentWeight = +potentialUpRight.getAttribute('data-weight');
-				potentialUpRight.setAttribute('data-weight', Math.sqrt(currentWeight*2));
+				const travelWeight = pythag(upWeight,currentWeight);
+				potentialUpRight.setAttribute('data-weight-cache', travelWeight);
 				neighbors.push(potentialUpRight);
 			}
 		}
 
 		const downLeft = () => {
 			let potentialDownLeft = grid[cellNum + (width-1)];
+			let potentialDown = grid[cellNum +width];
 			if(!potentialDownLeft.classList.contains('wall') && potentialDownLeft.classList.contains('unvisited')){
 				// setTimeout(() => {
 				// 	potentialDownLeft.classList.add('next');
 				// }, queue-speed);
+				const downWeight = potentialDown.getAttribute('data-weight');
 				const currentWeight = +potentialDownLeft.getAttribute('data-weight');
-				potentialDownLeft.setAttribute('data-weight', Math.sqrt(currentWeight*2));
+				const travelWeight = pythag(downWeight, currentWeight);
+				potentialDownLeft.setAttribute('data-weight-cache', travelWeight);
 				neighbors.push(potentialDownLeft);
 			}
 		}
 
 		const downRight = () => {
 			let potentialDownRight = grid[cellNum + (width+1)];
+			let potentialDown = grid[cellNum +width];
 			if(!potentialDownRight.classList.contains('wall') && potentialDownRight.classList.contains('unvisited')){
 				// setTimeout(() => {
 				// 	potentialDownRight.classList.add('next');
 				// }, queue-speed);
+				const downWeight = potentialDown.getAttribute('data-weight');
 				const currentWeight = +potentialDownRight.getAttribute('data-weight');
-				potentialDownRight.setAttribute('data-weight', Math.sqrt(currentWeight*2));
+				const travelWeight = pythag(downWeight, currentWeight);
+				potentialDownRight.setAttribute('data-weight-cache', travelWeight);
 				neighbors.push(potentialDownRight);
 			}
 		}
 
 		//up down left right
 		if(x === 1){
-			//right
 			right();
 			
 		} else if (x === width) {
@@ -188,41 +225,32 @@ function runDijkstra(grid, start, end){
 		
 		if(diagonalAllowed){
 			if(x === 1){
-				if(y === 1){
-					//up and to the right
+				if(y === 1){ 
 					upRight();
 					
 				} else if(y === height){
-					//down and to the right
 					downRight();
 					
 				} else {
-					//up right and down right
 					upRight();
 					downRight();
 				}
 			} else if(x === width){
 				if(y === 1){
-					//up and to the left
 					upLeft();
 				} else if(y === height){
-					//down and to the left
 					downLeft();
 				} else {
-					//up and down left
 					upLeft();
 					downLeft();
 				}
 			} else if(y === 1){
-				//up left and right
 				upLeft();
 				upRight();
 			} else if(y === height){
-				//down left and right
 				downLeft();
 				downRight();
 			} else {
-				//all four corners
 				upLeft();
 				upRight();
 				downLeft();
@@ -231,46 +259,61 @@ function runDijkstra(grid, start, end){
 		}
 
 
-		//
+		// Sorting which neighbors to check first. may not need to be done as queued list is now sorted
+		// neighbors.sort((a,b) => {
+		// 	let aWeight = +a.getAttribute('data-weight-cache');
+		// 	let bWeight = +b.getAttribute('data-weight-cache');
+		// 	if( aWeight === bWeight ){
+		// 		return 0
+		// 	} else if( aWeight < bWeight){
+		// 		return -1
+		// 	} else {
+		// 		return 1
+		// 	}
+		// console.log(neighbors);
+		// });
 		for(let neighbor of neighbors){
 			const neighborDistance = neighbor.getAttribute('data-distance');
-			const neighborWeight = +neighbor.getAttribute('data-weight');
+			const neighborWeight = +neighbor.getAttribute('data-weight-cache');
 			const tentativeDistance = +cellDistance + neighborWeight;
 			//console.log('existing: ' + cellDistance + ',  neighborDistance: ' + neighborDistance + ', neighborWeight: ' + neighborWeight + ', tentativeDistance: ' + tentativeDistance);
 
 			const routeNeighbor = () => {
 				neighbor.setAttribute('data-routedFrom', currentCell.getAttribute('data-cellnum'));
 				const neighborIndex = unvisited.indexOf(neighbor);
-				visited.push(...unvisited.splice(neighborIndex,1));
+				queued.push(...unvisited.splice(neighborIndex,1));
 			}
 
 			if(neighborDistance === 'infinity'){
-				neighbor.setAttribute('data-distance', +cellDistance + neighborWeight );
+				//console.log('first case: replacing infinity');
+				neighbor.setAttribute('data-distance', tentativeDistance );
 				neighbor.classList.remove('unvisited');
-				//delayVisual(neighbor, 'visited', queue);
+				delayVisual(neighbor, 'queued', queue);
 				queue += speed;
 				routeNeighbor();
 				
 				
 			} else if( tentativeDistance < neighborDistance ){
-				console.log('got to second case');
-				console.log('neighborDistance existing: ' + neighborDistance + ' vs tentative distance: ' + tentativeDistance);
+				//console.log('neighborDistance existing: ' + neighborDistance + ' vs tentative distance: ' + tentativeDistance);
 				neighbor.setAttribute('data-distance', tentativeDistance );
 				neighbor.classList.remove('unvisited');
-				//delayVisual(neighbor, 'visited', queue);
+				delayVisual(neighbor, 'queued', queue);
 				queue += speed;
 				routeNeighbor();
 			} else {
 				neighbor.classList.remove('unvisited');
-				//console.log('got to third case');
-				//console.log('neighborDistance existing: ' + neighborDistance + ' vs tentative distance: ' + tentativeDistance);
+				//console.log('got to third case: neighborDistance existing: ' + neighborDistance + ' vs tentative distance: ' + tentativeDistance);
 			}
 
 			
 
 		}
+		currentCell.classList.remove('unvisited');
+		const currentQueueIndex = queued.indexOf(currentCell);
+		//if(currentQueueIndex)queued.splice(currentQueueIndex,1);
 		if(neighbors.length === 0){
 			noAvailableNeighbors = true;
+			console.log('checked all neighbors found none');
 		}
 		return neighbors;
 		

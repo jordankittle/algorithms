@@ -231,25 +231,25 @@ input[type=text] {
 
 
 
-@keyframes visited {
-	from {background-color: yellow;}
-  	to {background-color: royalblue;}
-}
-
-
-.cell.visited {
-	background: royalblue;
-	animation-name: visited;
-	animation-duration: .3s;
-}
-
-@keyframes current {
+@keyframes queued {
 	from {background-color: yellow;}
   	to {background-color: dodgerblue;}
 }
 
-.cell.current{
+
+.cell.queued {
 	background: dodgerblue;
+	animation-name: queued;
+	animation-duration: .3s;
+}
+
+@keyframes current {
+	from {background-color: white;}
+  	to {background-color: royalblue;}
+}
+
+.cell.current{
+	background: royalblue;
 	animation-name: current;
 	animation-duration: .3s;
 
@@ -264,6 +264,15 @@ input[type=text] {
 	background: red;
 }
 
+
+.cell.hill{
+	background: grey;
+}
+
+.cell.wall{
+	background: black;
+}
+
 @keyframes route {
 	from {background-color: dodgerblue;}
   	to {background-color: white;}
@@ -273,11 +282,6 @@ input[type=text] {
 	background: white;
 	animation-name: route;
 	animation-duration: .3s;
-}
-
-
-.cell.wall{
-	background: black;
 }
 
 .clearfix {
