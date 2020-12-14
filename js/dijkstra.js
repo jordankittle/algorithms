@@ -16,8 +16,8 @@ function runDijkstra(grid, start, end){
 	getNeighbors(start);
 
 
-	while(queued.length > 0 ){
-		console.log('1');
+	while(unvisited.length > 0 ){
+		console.log(unvisited.length);
 		
 		console.log(queued);
 		if(done) break;
@@ -41,6 +41,7 @@ function runDijkstra(grid, start, end){
 			});
 			if(queued[0] === end){
 				console.log('done');
+				console.log(unvisited.length);
 				done = true;
 				setTimeout(() => {
 					tracePath(end);
@@ -79,9 +80,7 @@ function runDijkstra(grid, start, end){
 
 
 	function getNeighbors(currentCell){
-		if(!currentCell.getAttribute('data-id')){
-			console.log(currentCell);
-		}
+	
 		delayVisual(currentCell, 'current', queue-speed);
 		// setTimeout(() => {
 		// 			currentCell.classList.add('current');
@@ -273,6 +272,7 @@ function runDijkstra(grid, start, end){
 		// console.log(neighbors);
 		// });
 		for(let neighbor of neighbors){
+			neighbor.setAttribute('calledby', currentCell.getAttribute('data-cellnum'));
 			const neighborDistance = neighbor.getAttribute('data-distance');
 			const neighborWeight = +neighbor.getAttribute('data-weight-cache');
 			const tentativeDistance = +cellDistance + neighborWeight;
@@ -280,28 +280,28 @@ function runDijkstra(grid, start, end){
 
 			const routeNeighbor = () => {
 				neighbor.setAttribute('data-routedFrom', currentCell.getAttribute('data-cellnum'));
-				const neighborIndex = unvisited.indexOf(neighbor);
-				queued.push(...unvisited.splice(neighborIndex,1));
+				queued.push(neighbor);
+
 			}
 
 			if(neighborDistance === 'infinity'){
 				//console.log('first case: replacing infinity');
 				neighbor.setAttribute('data-distance', tentativeDistance );
-				neighbor.classList.remove('unvisited');
+				//neighbor.classList.remove('unvisited');
 				delayVisual(neighbor, 'queued', queue);
 				queue += speed;
 				routeNeighbor();
 				
 				
 			} else if( tentativeDistance < neighborDistance ){
-				//console.log('neighborDistance existing: ' + neighborDistance + ' vs tentative distance: ' + tentativeDistance);
+				console.log('neighborDistance existing: ' + neighborDistance + ' vs tentative distance: ' + tentativeDistance);
 				neighbor.setAttribute('data-distance', tentativeDistance );
-				neighbor.classList.remove('unvisited');
+				//neighbor.classList.remove('unvisited');
 				delayVisual(neighbor, 'queued', queue);
 				queue += speed;
 				routeNeighbor();
 			} else {
-				neighbor.classList.remove('unvisited');
+				//neighbor.classList.remove('unvisited');
 				//console.log('got to third case: neighborDistance existing: ' + neighborDistance + ' vs tentative distance: ' + tentativeDistance);
 			}
 
@@ -309,8 +309,8 @@ function runDijkstra(grid, start, end){
 
 		}
 		currentCell.classList.remove('unvisited');
-		const currentQueueIndex = queued.indexOf(currentCell);
-		//if(currentQueueIndex)queued.splice(currentQueueIndex,1);
+		const currentQueueIndex = unvisited.indexOf(currentCell);
+		unvisited.splice(currentQueueIndex, 1);
 		if(neighbors.length === 0){
 			noAvailableNeighbors = true;
 			console.log('checked all neighbors found none');
