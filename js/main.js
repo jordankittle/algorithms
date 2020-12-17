@@ -70,15 +70,17 @@ function createGrid(){
 	grid.addEventListener('mousedown', e => {
 		if(e.which === 2){
 			for(cell of cells){
-				cell.className = 'cell';
+				//cell.className = 'cell';
+				cell.classList.remove('queued', 'current', 'route');
 				cell.classList.add('unvisited');
 				cell.setAttribute('data-distance', 'infinity');
-				cell.setAttribute('data-weight', 1);
+				//cell.setAttribute('data-weight', 1);
 				cell.textContent = '';
 				message.textContent = '';
+				toggle(resetButton, startButton);
 			}
-			start = null;
-			end = null;
+			//start = null;
+			//end = null;
 		}
 		
 	});
