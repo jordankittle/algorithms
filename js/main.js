@@ -8,6 +8,7 @@ const widthInput = document.getElementById('widthInput');
 const heightInput = document.getElementById('heightInput')
 const startButton = document.getElementById('run');
 const resetButton = document.getElementById('reset');
+var isFirefox = typeof InstallTrigger !== 'undefined';
 let addEndPoint = false;
 let drawWall = false;
 let drawHill = false;
@@ -18,9 +19,13 @@ var mainWidth = main.clientWidth;
 var mainHeight = window.innerHeight - (header.clientHeight + footer.clientHeight);
 var height = 30;
 var width = mainWidth > 769 ? mainWidth > 1200 ? 90 : 60 : 30;
-var cellWidth = (mainWidth/width);
-var cellHeight = (mainHeight/height);
+var cellWidth = Math.floor(mainWidth/width);
+var cellHeight = Math.floor(mainHeight/height);
 
+if(isFirefox) {
+	width = 60;
+	document.getElementById('little-message').style.display = 'inline-block';
+}
 widthInput.value = width;
 heightInput.value = height;
 

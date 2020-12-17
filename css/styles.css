@@ -44,6 +44,12 @@ body {
 	color: white;
 }
 
+#little-message{
+	font-size:10px;
+	color: white;
+	display: none;
+}
+
 
 button{
 	background: dodgerblue;
