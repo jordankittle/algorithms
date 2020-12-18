@@ -23,7 +23,8 @@ var cellWidth = Math.floor(mainWidth/width);
 var cellHeight = Math.floor(mainHeight/height);
 
 if(isFirefox) {
-	width = 60;
+
+	width = mainWidth > 769 ? 60 : 30;
 	document.getElementById('little-message').style.display = 'inline-block';
 }
 widthInput.value = width;
@@ -83,6 +84,7 @@ function createGrid(){
 				cell.textContent = '';
 				message.textContent = '';
 				toggle(resetButton, startButton);
+				message.textContent = 'Ready';
 			}
 			//start = null;
 			//end = null;
