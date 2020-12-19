@@ -8,7 +8,6 @@ const widthInput = document.getElementById('widthInput');
 const heightInput = document.getElementById('heightInput')
 const startButton = document.getElementById('run');
 const resetButton = document.getElementById('reset');
-var isFirefox = typeof InstallTrigger !== 'undefined';
 let addEndPoint = false;
 let drawWall = false;
 let drawHill = false;
@@ -21,12 +20,6 @@ var height = 30;
 var width = mainWidth > 769 ? mainWidth > 1200 ? 90 : 60 : 30;
 var cellWidth = Math.floor(mainWidth/width);
 var cellHeight = Math.floor(mainHeight/height);
-
-if(isFirefox) {
-
-	width = mainWidth > 769 ? 60 : 30;
-	document.getElementById('little-message').style.display = 'inline-block';
-}
 widthInput.value = width;
 heightInput.value = height;
 
@@ -268,17 +261,36 @@ function run(){
 function resizeGrid(){
 	mainWidth = main.clientWidth;
 	mainHeight = window.innerHeight - (header.clientHeight + footer.clientHeight);
-	cellWidth = mainWidth/ width;
-	cellHeight = mainHeight/ height;
+	cellWidth = Math.floor(mainWidth/ width);
+	cellHeight = Math.floor(mainHeight/ height);
 	const grid  = document.getElementById('grid');
-	grid.style.width = `${width * cellWidth}px`;
-	grid.style.height = `${height * cellHeight}px`;
+	grid.style.width = `${Math.floor(width * cellWidth)}px`;
+	grid.style.height = `${Math.floor(height * cellHeight)}px`;
+	//console.log(grid.style.height);
 	const cells = document.querySelectorAll('.cell');
 	for(cell of cells){
 		cell.style.width = `${cellWidth}px`;
 		cell.style.height = `${cellHeight}px`;
 	}
+	//console.log(mainHeight, window.innerHeight - (header.clientHeight + footer.clientHeight, main.clientHeight));
+	checkSizes();
 
+}
+
+function checkSizes(){
+	if(
+		main.clientWidth < width* cellWidth ||
+		main.clientWidth > window.innerWidth ||
+		main.clientHeight < height* cellHeight ||
+		(main.clientHeight + footer.clientHeight + header.clientHeight) > window.innerHeight
+
+	){
+		if(main.clientWidth < width* cellWidth) console.log('grid is bigger than main? ', main.clientWidth < width* cellWidth, main.clientWidth, width* cellWidth);
+		if(main.clientWidth > window.innerWidth) console.log('grid is bigger than window.innerWidth?',  width.cellWidth > window.innerWidth, main.clientWidth, window.innerWidth, width * cellWidth);
+		if(main.clientHeight < height* cellHeight) console.log('grid is bigger than main? ', main.clientHeight < height* cellHeight, 'main clientHeight: ' +  main.clientHeight, 'grid height: ' + height* cellHeight);
+		if((main.clientHeight + footer.clientHeight + header.clientHeight) > window.innerHeight) console.log('page is bigger than window.innerHeight. Window height: ', window.innerHeight - (header.clientHeight + footer.clientHeight), 'main height: ', main.clientHeight);
+		console.log('##############################################');
+	}
 }
 
 function toggle(hide, show){

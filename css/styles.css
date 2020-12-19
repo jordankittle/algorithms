@@ -20,6 +20,7 @@ body {
 #title{
 	display:inline-block;
 	flex: 1;
+	min-width:40%;
 
 }
 
@@ -39,15 +40,13 @@ body {
 	color: white;
 }
 
+#menu{
+	text-align:center;
+}
+
 #message {
 	display: inline-block;
 	color: white;
-}
-
-#little-message{
-	font-size:10px;
-	color: white;
-	display: none;
 }
 
 
@@ -157,7 +156,7 @@ input[type=text] {
 
 
 #main-wrapper{
-	background: #EEEEEE;
+	background: dodgerblue;
 	margin: auto;
 	width: 100%;
 	justify-content: center;
@@ -168,11 +167,10 @@ input[type=text] {
 }
 
 #main{
-	background: white;
 	width:100%;
 	justify-content: center;
 	align-items: center;
-	flex: 1 1 auto;
+	display: flex;
 }
 
 #footer-wrapper{
@@ -193,8 +191,7 @@ input[type=text] {
 .grid{
 	display: flex;
 	flex-wrap: wrap;
-	width: 1200px;
-	height: 675px;
+	height:100%;
 }
 
 .cell{
