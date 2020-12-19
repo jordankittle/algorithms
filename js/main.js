@@ -140,6 +140,7 @@ function handleMouseOver(e){
 	if(drawWall === true && addEndPoint === true){
 		e.target.classList.remove('wall');
 		e.target.classList.remove('hill');
+		e.target.setAttribute('data-weight', 1);
 	} else if (
 			  	drawWall === true
 			  	&& !e.target.classList.contains('start') 
@@ -157,6 +158,7 @@ function handleMouseOver(e){
 			} 
 	if(drawHill === true && addEndPoint === true){
 		e.target.classList.remove('hill');
+		e.target.setAttribute('data-weight', 1);
 	} else if (
 			  	drawHill === true
 			  	&& !e.target.classList.contains('start') 
