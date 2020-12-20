@@ -150,9 +150,8 @@ function runDijkstra(grid, start, end){
 				// setTimeout(() => {
 				// 	potentialUpLeft.classList.add('next');
 				// }, queue-speed);
-				const upWeight = potentialUp.getAttribute('data-weight');
 				const currentWeight = +potentialUpLeft.getAttribute('data-weight');
-				const travelWeight = pythag(upWeight, currentWeight);
+				const travelWeight = pythag(currentWeight, currentWeight);
 				potentialUpLeft.setAttribute('data-weight-cache', travelWeight);
 				neighbors.push(potentialUpLeft);
 			}
@@ -160,14 +159,12 @@ function runDijkstra(grid, start, end){
 
 		const upRight = () => {
 			let potentialUpRight = grid[cellNum - (width-1)];
-			let potentialUp = grid[cellNum -width];
 			if(!potentialUpRight.classList.contains('wall') && potentialUpRight.classList.contains('unvisited')){
 				// setTimeout(() => {
 				// 	potentialUpRight.classList.add('next');
 				// }, queue-speed);
-				const upWeight = potentialUp.getAttribute('data-weight');
 				const currentWeight = +potentialUpRight.getAttribute('data-weight');
-				const travelWeight = pythag(upWeight,currentWeight);
+				const travelWeight = pythag(currentWeight,currentWeight);
 				potentialUpRight.setAttribute('data-weight-cache', travelWeight);
 				neighbors.push(potentialUpRight);
 			}
@@ -175,14 +172,12 @@ function runDijkstra(grid, start, end){
 
 		const downLeft = () => {
 			let potentialDownLeft = grid[cellNum + (width-1)];
-			let potentialDown = grid[cellNum +width];
 			if(!potentialDownLeft.classList.contains('wall') && potentialDownLeft.classList.contains('unvisited')){
 				// setTimeout(() => {
 				// 	potentialDownLeft.classList.add('next');
 				// }, queue-speed);
-				const downWeight = potentialDown.getAttribute('data-weight');
 				const currentWeight = +potentialDownLeft.getAttribute('data-weight');
-				const travelWeight = pythag(downWeight, currentWeight);
+				const travelWeight = pythag(currentWeight, currentWeight);
 				potentialDownLeft.setAttribute('data-weight-cache', travelWeight);
 				neighbors.push(potentialDownLeft);
 			}
@@ -190,74 +185,33 @@ function runDijkstra(grid, start, end){
 
 		const downRight = () => {
 			let potentialDownRight = grid[cellNum + (width+1)];
-			let potentialDown = grid[cellNum +width];
 			if(!potentialDownRight.classList.contains('wall') && potentialDownRight.classList.contains('unvisited')){
 				// setTimeout(() => {
 				// 	potentialDownRight.classList.add('next');
 				// }, queue-speed);
-				const downWeight = potentialDown.getAttribute('data-weight');
 				const currentWeight = +potentialDownRight.getAttribute('data-weight');
-				const travelWeight = pythag(downWeight, currentWeight);
+				const travelWeight = pythag(currentWeight, currentWeight);
 				potentialDownRight.setAttribute('data-weight-cache', travelWeight);
 				neighbors.push(potentialDownRight);
 			}
 		}
 
-		//up down left right
-		if(x === 1){
-			right();
-			
-		} else if (x === width) {
-			left();
-		} else {
-			left();
-			right();
-		} 
-		if(y === 1){
-			up();
-		} else if (y === height) {
-			down();
-		} else {
-			up();
-			down();
-		}
-		
+		if(x > 1) left();
+		if(x < width) right();
+		if(y > 1) down();
+		if(y < height ) up();
+
 		if(diagonalAllowed){
-			if(x === 1){
-				if(y === 1){ 
-					upRight();
-					
-				} else if(y === height){
-					downRight();
-					
-				} else {
-					upRight();
-					downRight();
-				}
-			} else if(x === width){
-				if(y === 1){
-					upLeft();
-				} else if(y === height){
-					downLeft();
-				} else {
-					upLeft();
-					downLeft();
-				}
-			} else if(y === 1){
-				upLeft();
-				upRight();
-			} else if(y === height){
-				downLeft();
-				downRight();
-			} else {
-				upLeft();
-				upRight();
-				downLeft();
-				downRight();
+			if(x > 1){
+				if(y > 1) downLeft();
+				if(y < height) upLeft();
+			}
+			if(x < width){
+				if(y > 1) downRight();
+				if(y < height) upRight();
 			}
 		}
-
-
+		
 		// Sorting which neighbors to check first. may not need to be done as queued list is now sorted
 		// neighbors.sort((a,b) => {
 		// 	let aWeight = +a.getAttribute('data-weight-cache');
