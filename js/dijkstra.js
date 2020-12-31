@@ -23,7 +23,7 @@ function runDijkstra(grid, start, end){
 		if(done) break;
 		if(noAvailableNeighbors){
 			setTimeout(() => {
-					message.textContent = "No Route Found";
+					message.textContent = "No Route";
 				}, queue);
 			return;
 		}
@@ -44,56 +44,29 @@ function runDijkstra(grid, start, end){
 				console.log(unvisited.length);
 				done = true;
 				setTimeout(() => {
-					tracePathForward(end);
+					tracePath(end); // 
 					message.textContent = "Route Found";
 				}, queue);
 				return;
 			}
-			getNeighbors(queued.splice(0,1)[0]);
+			//getNeighbors(queued.splice(0,1)[0]);
+			getNeighbors(queued.shift());
 			
 		}
 	}
 
-	function tracePathForward(lastCell){
+	function tracePath(lastCell, direction = 'forward'){
 		const path = [];
+		lastCell.textContent = (+lastCell.getAttribute('data-distance')).toFixed(1);
 		const trace = (lastCell) => {
-			
-			const lastDistance = +lastCell.getAttribute('data-distance');	
-			lastCell.textContent = lastDistance.toFixed(1);
+			lastCell.textContent = (+lastCell.getAttribute('data-distance')).toFixed(1);	
 			const previousCellNum = lastCell.getAttribute('data-routedFrom');
 			const previousCell = Array.from(grid).filter(cell => cell.getAttribute('data-cellnum') === previousCellNum );
 			if(previousCell[0] === start){
 				return;
 			}
 			if(previousCell.length !== 0){
-				path.unshift(previousCell[0]);
-			}
-			
-			trace(previousCell[0]);
-		}
-		trace(lastCell);
-		let tracePosition = 0;
-		const addClass = (point) => {
-			point.classList.add('route');
-			if(tracePosition < path.length) setTimeout(() => addClass(path[tracePosition++]), speed*2);
-		}
-		addClass(path[0]);
-		
-	}
-
-	function tracePathBackward(lastCell){
-		const path = [];
-		const trace = (lastCell) => {
-			
-			const lastDistance = +lastCell.getAttribute('data-distance');	
-			lastCell.textContent = lastDistance.toFixed(1);
-			const previousCellNum = lastCell.getAttribute('data-routedFrom');
-			const previousCell = Array.from(grid).filter(cell => cell.getAttribute('data-cellnum') === previousCellNum );
-			if(previousCell[0] === start){
-				return;
-			}
-			if(previousCell.length !== 0){
-				path.push(previousCell[0]);
+				direction === 'forward' ? path.unshift(previousCell[0]) : path.push(previousCell[0]);
 			}
 			
 			trace(previousCell[0]);

@@ -199,11 +199,7 @@ input[type=text] {
 	background: dodgerblue;
 	font-size: 7px;
 	text-align: center;
-
-	/*height: 15px;
-	width: 15px;
-	*/
-	
+	color: royalblue;
 }
 
 .main-button{
