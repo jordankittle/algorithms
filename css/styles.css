@@ -184,8 +184,6 @@ input[type=text] {
 	font-size: .75em;
 	color: white;
 	font-weight: bold;
-	border: solid black;
-	border-width: 0px 1px;
 }
 
 .grid{
