@@ -116,8 +116,8 @@ function runDijkstra(grid, start, end){
 			}
 		}
 
-		if(x > 1) explore(currentCell.previousElementSibling);
-		if(x < width) explore(currentCell.nextElementSibling);
+		if(x > 1) explore(grid[cellNum - 1]);
+		if(x < width) explore(grid[cellNum + 1]);
 		if(y > 1) explore(grid[cellNum +width]);
 		if(y < height ) explore(grid[cellNum -width]);
 
